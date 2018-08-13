@@ -6,98 +6,103 @@
       <div class="col">
 
       </div>
-      <div class="col-10 col-sm-7 col-md-6 col-lg-6">
-        <form action="/campgrounds" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
-          <div class="form-group">
-            <label for="">Name</label>
-            <input type="text" class="form-control" name="campground[name]" placeholder="Name" required>
-            <div class="invalid-feedback">
-              Please provide a campground name.
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="">Price/Night</label>
-            <input type="number" class="form-control" name="campground[price]" placeholder="Price/Night" min="0.01" step="0.01" required>
-            <div class="invalid-feedback">
-              Please provide a price.
-            </div>
-          </div>
-          <div class="input-group mb-3">
-            <div class="custom-file">
-              <input type="file" name="image" accept="image/*" class="custom-file-input" id="image" aria-describedby="inputGroupFileAddon01"
-                required>
+      <div class="col-12 col-sm-12 col-lg-9">
+        <div class="card shadow border-0 p-4">
+          <form action="/campgrounds" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+            <div class="form-group">
+              <label for="">Name</label>
+              <input type="text" class="form-control" name="campground[name]" placeholder="Name" required>
               <div class="invalid-feedback">
-                Please upload an image of your campground.
-              </div>
-              <label class="custom-file-label" for="inputGroupFile01">Image</label>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="exampleFormControlTextarea1">Description</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" name="campground[description]" rows="3" required></textarea>
-            <div class="invalid-feedback">
-              Please provide a description of your campground.
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="">Address</label>
-            <input type="text" class="form-control" name="campground[street]" placeholder="Address" required>
-            <div class="invalid-feedback">
-              Please provide a valid address.
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-6">
-              <label for="inputCity">City</label>
-              <input type="text" class="form-control" id="inputCity" name="campground[city]" placeholder="San Jose" required>
-              <div class="invalid-feedback">
-                Please provide a valid city.
+                Please provide a campground name.
               </div>
             </div>
-            <div class="form-group col-md-4">
-              <label for="inputState">State</label>
-              <input type="text" class="form-control" id="inputState" name="campground[state]" placeholder="CA" required>
+            <div class="form-group">
+              <label for="">Price/Night</label>
+              <input type="number" class="form-control" name="campground[price]" placeholder="Price/Night" min="0.01" step="0.01" required>
               <div class="invalid-feedback">
-                Please provide a valid state.
+                Please provide a price.
               </div>
             </div>
-            <div class="invalid-feedback">
-              Please provide a booking window.
-            </div>
-            <div class="form-group col-md-2">
-              <label for="inputZip">Zip</label>
-              <input type="text" class="form-control" id="inputZip" name="campground[zip]" placeholder="12345" required>
-              <div class="invalid-feedback">
-                Please provide a valid zip.
+            <div class="input-group mb-3">
+              <div class="custom-file">
+                <input type="file" name="image" accept="image/*" class="custom-file-input" id="image" aria-describedby="inputGroupFileAddon01"
+                  required>
+                <div class="invalid-feedback">
+                  Please upload an image of your campground.
+                </div>
+                <label class="custom-file-label" for="inputGroupFile01">Image</label>
               </div>
             </div>
-          </div>
-          <div class="form-group">
-            <label for="">Phone Number</label>
-            <input type="text" class="form-control" name="campground[phone]" placeholder="123-456-7891" required>
-            <div class="invalid-feedback">
-              Please provide a phone number.
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1">Description</label>
+              <textarea class="form-control" id="exampleFormControlTextarea1" name="campground[description]" rows="3" required></textarea>
+              <div class="invalid-feedback">
+                Please provide a description of your campground.
+              </div>
             </div>
-          </div>
-          <label for="">Booking Window</label>
-          <div class="form-row">
-            <div class="form-group col-md-6">
-              <input type="text" class="form-control" name="campground[start]" placeholder="Starting Month" required>
+            <div class="form-group">
+              <label for="">Address</label>
+              <input type="text" class="form-control" name="campground[street]" placeholder="Address" required>
+              <div class="invalid-feedback">
+                Please provide a valid address.
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="inputCity">City</label>
+                <input type="text" class="form-control" id="inputCity" name="campground[city]" placeholder="San Jose" required>
+                <div class="invalid-feedback">
+                  Please provide a valid city.
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="inputState">State</label>
+                <input type="text" class="form-control" id="inputState" name="campground[state]" placeholder="CA" required>
+                <div class="invalid-feedback">
+                  Please provide a valid state.
+                </div>
+              </div>
               <div class="invalid-feedback">
                 Please provide a booking window.
               </div>
+              <div class="form-group col-md-2">
+                <label for="inputZip">Zip</label>
+                <input type="text" class="form-control" id="inputZip" name="campground[zip]" placeholder="12345" required>
+                <div class="invalid-feedback">
+                  Please provide a valid zip.
+                </div>
+              </div>
             </div>
-            <div class="form-group col-md-6">
-              <input type="text" class="form-control" name="campground[end]" placeholder="Ending Month" required>
+            <div class="form-group">
+              <label for="">Phone Number</label>
+              <input type="text" class="form-control" name="campground[phone]" placeholder="123-456-7891" required>
+              <div class="invalid-feedback">
+                Please provide a phone number.
+              </div>
             </div>
-          </div>
-          <div class="form-group">
-            <label for="">Amenities separated by commas <span class="text-muted">(Optional)</span> </label>
-            <input type="text" class="form-control" name="campground[tags]" placeholder="Example: boating,fishing,wifi">
-          </div>
-          <button type="submit" class="btn btn-primary btn-block">Submit</button>
-        </form>
-        <a class="btn btn-link btn-block" href="/campgrounds">Go Back</a>
+            <label for="">Booking Window</label>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <input type="text" class="form-control" name="campground[start]" placeholder="Starting Month" required>
+                <div class="invalid-feedback">
+                  Please provide a booking window.
+                </div>
+              </div>
+              <div class="form-group col-md-6">
+                <input type="text" class="form-control" name="campground[end]" placeholder="Ending Month" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="">Amenities separated by commas
+                <span class="text-muted">(Optional)</span>
+              </label>
+              <input type="text" class="form-control" name="campground[tags]" placeholder="Example: boating,fishing,wifi">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+          </form>
+          <a class="btn btn-link btn-block" href="/campgrounds">Go Back</a>
+        </div>
+
       </div>
       <div class="col">
 

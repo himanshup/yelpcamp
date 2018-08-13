@@ -8,86 +8,90 @@
       <div class="col">
 
       </div>
-      <div class="col-10 col-sm-7 col-md-6 col-lg-6">
-        <form action="/campgrounds/<%= campground._id %>?_method=PUT" method="POST" class="needs-validation" enctype="multipart/form-data" novalidate>
-          <div class="form-group">
-            <label>Name</label>
-            <input type="text" class="form-control" name="campground[name]" value="<%= campground.name %>">
-          </div>
-          <div class="form-group">
-            <label for="">Price/Night</label>
-            <input type="number" class="form-control" name="campground[price]" value="<%= campground.price %>" min="0.01" step="0.01">
-          </div>
-          <div class="input-group mb-3">
-            <div class="custom-file">
-              <input type="file" name="image" accept="image/*" class="custom-file-input" id="image" aria-describedby="inputGroupFileAddon01">
-              <label class="custom-file-label" for="inputGroupFile01">Image</label>
+      <div class="col-12 col-sm-12 col-lg-9">
+        <div class="card shadow border-0 p4">
+          <form action="/campgrounds/<%= campground._id %>?_method=PUT" method="POST" class="needs-validation" enctype="multipart/form-data"
+            novalidate>
+            <div class="form-group">
+              <label>Name</label>
+              <input type="text" class="form-control" name="campground[name]" value="<%= campground.name %>">
             </div>
-          </div>
-          <div class="form-group">
-            <label for="exampleFormControlTextarea1">Description</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" name="campground[description]" rows="3" required><%= campground.description %></textarea>
-          </div>
-          <div class="form-group">
-            <label for="">Address</label>
-            <input type="text" class="form-control" name="campground[street]" value="<%= campground.address.street %>" required>
-            <div class="invalid-feedback">
-              Please provide a valid address.
+            <div class="form-group">
+              <label for="">Price/Night</label>
+              <input type="number" class="form-control" name="campground[price]" value="<%= campground.price %>" min="0.01" step="0.01">
             </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-6">
-              <label for="inputCity">City</label>
-              <input type="text" class="form-control" id="inputCity" name="campground[city]" value="<%= campground.address.city %>" required>
-              <div class="invalid-feedback">
-                Please provide a valid city.
+            <div class="input-group mb-3">
+              <div class="custom-file">
+                <input type="file" name="image" accept="image/*" class="custom-file-input" id="image" aria-describedby="inputGroupFileAddon01">
+                <label class="custom-file-label" for="inputGroupFile01">Image</label>
               </div>
             </div>
-            <div class="form-group col-md-4">
-              <label for="inputState">State</label>
-              <input type="text" class="form-control" id="inputState" name="campground[state]" value="<%= campground.address.state %>"
-                required>
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1">Description</label>
+              <textarea class="form-control" id="exampleFormControlTextarea1" name="campground[description]" rows="3" required><%= campground.description %></textarea>
+            </div>
+            <div class="form-group">
+              <label for="">Address</label>
+              <input type="text" class="form-control" name="campground[street]" value="<%= campground.address.street %>" required>
               <div class="invalid-feedback">
-                Please provide a valid state.
+                Please provide a valid address.
               </div>
             </div>
-            <div class="invalid-feedback">
-              Please provide a booking window.
-            </div>
-            <div class="form-group col-md-2">
-              <label for="inputZip">Zip</label>
-              <input type="text" class="form-control" id="inputZip" name="campground[zip]" value="<%= campground.address.zip %>" required>
-              <div class="invalid-feedback">
-                Please provide a valid zip.
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="inputCity">City</label>
+                <input type="text" class="form-control" id="inputCity" name="campground[city]" value="<%= campground.address.city %>" required>
+                <div class="invalid-feedback">
+                  Please provide a valid city.
+                </div>
               </div>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="">Phone Number</label>
-            <input type="text" class="form-control" name="campground[phone]" value="<%= campground.phone %>" required>
-            <div class="invalid-feedback">
-              Please provide a phone number.
-            </div>
-          </div>
-          <label for="">Booking Window</label>
-          <div class="form-row">
-            <div class="form-group col-md-6">
-              <input type="text" class="form-control" name="campground[start]" value="<%= campground.booking.start %>" required>
+              <div class="form-group col-md-4">
+                <label for="inputState">State</label>
+                <input type="text" class="form-control" id="inputState" name="campground[state]" value="<%= campground.address.state %>"
+                  required>
+                <div class="invalid-feedback">
+                  Please provide a valid state.
+                </div>
+              </div>
               <div class="invalid-feedback">
                 Please provide a booking window.
               </div>
+              <div class="form-group col-md-2">
+                <label for="inputZip">Zip</label>
+                <input type="text" class="form-control" id="inputZip" name="campground[zip]" value="<%= campground.address.zip %>" required>
+                <div class="invalid-feedback">
+                  Please provide a valid zip.
+                </div>
+              </div>
             </div>
-            <div class="form-group col-md-6">
-              <input type="text" class="form-control" name="campground[end]" value="<%= campground.booking.end %>" required>
+            <div class="form-group">
+              <label for="">Phone Number</label>
+              <input type="text" class="form-control" name="campground[phone]" value="<%= campground.phone %>" required>
+              <div class="invalid-feedback">
+                Please provide a phone number.
+              </div>
             </div>
-          </div>
-          <div class="form-group">
-            <label for="">Amenities separated by commas (boating,fishing,wifi)</label>
-            <input type="text" class="form-control" name="campground[tags]" value="<%= campground.tags %>">
-          </div>
-          <button type="submit" class="btn btn-primary btn-block">Submit</button>
-        </form>
-        <a class="btn btn-link btn-block" href="/campgrounds/<%= campground._id %>">Go Back</a>
+            <label for="">Booking Window</label>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <input type="text" class="form-control" name="campground[start]" value="<%= campground.booking.start %>" required>
+                <div class="invalid-feedback">
+                  Please provide a booking window.
+                </div>
+              </div>
+              <div class="form-group col-md-6">
+                <input type="text" class="form-control" name="campground[end]" value="<%= campground.booking.end %>" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="">Amenities separated by commas (boating,fishing,wifi)</label>
+              <input type="text" class="form-control" name="campground[tags]" value="<%= campground.tags %>">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+          </form>
+          <a class="btn btn-link btn-block" href="/campgrounds/<%= campground._id %>">Go Back</a>
+        </div>
+
       </div>
       <div class="col">
 

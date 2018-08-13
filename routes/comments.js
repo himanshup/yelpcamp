@@ -83,6 +83,17 @@ router.delete("/:comment_id", middleware.checkCommentOwnership, function(
     if (err) {
       res.redirect("back");
     } else {
+      Campground.findByIdAndUpdate(
+        req.params.id,
+        { $pull: { comments: { $in: [req.params.comment_id] } } },
+        function(err) {
+          if (err) {
+            console.log(err);
+          } else {
+            console.log("updated the campground comments array");
+          }
+        }
+      );
       req.flash("success", "Review deleted!");
       res.redirect("/campgrounds/" + req.params.id);
     }
