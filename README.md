@@ -7,5 +7,5 @@ I created this website with Node.js, Express, MongoDB, and Bootstrap. Passport.j
 ```
 git clone https://github.com/himanshup/yelp-camp.git
 cd yelp-camp
-node (or nodemon) app.js
+npm install
 ```
