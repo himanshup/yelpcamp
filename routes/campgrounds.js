@@ -37,7 +37,7 @@ router.get("/", function(req, res) {
           noMatch =
             "Couldn't find results for " +
             req.query.search +
-            " , please try again.";
+            ", please try again.";
         }
         res.render("campgrounds/index", {
           campgrounds: allCampgrounds,
@@ -141,7 +141,7 @@ router.get("/:id", function(req, res) {
         return res.redirect("/campgrounds");
       }
       // foundCampground.rateCount = foundCampground.comments.length;
-      foundCampground.save();
+      // foundCampground.save();
       res.render("campgrounds/show", { campground: foundCampground });
     });
 });

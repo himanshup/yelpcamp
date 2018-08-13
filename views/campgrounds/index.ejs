@@ -1,16 +1,30 @@
 <% include ../partials/header %>
 
-  <header class="jumbotron text-center rounded-0">
-    <div class="jumbotron-text">
-      <h1 class="display-4">Welcome To YelpCamp!</h1>
-      <p class="lead">View our hand-picked campgrounds from all over the world</p>
-      <a class="btn btn-primary btn-lg" href="/campgrounds/new" role="button">Add New Campground</a>
-      <form action="/campgrounds" method="GET" class="form-inline">
-        <input class="form-control mr-sm-2" type="text" name="search" placeholder="Search" aria-label="Search">
-        <button class="btn text-light my-2 my-sm-0 btn-sm bg-transparent border-0" type="submit">
-          <i class="fas fa-search"></i>
-        </button>
-      </form>
+  <header class="jumbotron text-center text-light d-flex justify-content-center rounded-0">
+    <div class="jumbotron-text mt-5">
+      <% if(noMatch !== null) { %>
+        <h3 class="jumbotext"><%= noMatch %> </h3>
+        <form action="/campgrounds" method="GET" class="input-group shadow-lg mt-3">        
+          <input type="text" class="form-control" type="text" name="search" placeholder="Search..." aria-label="Search">
+          <div class="input-group-append">
+            <button class="btn btn-danger" type="submit">
+              <i class="fa fa-search"></i>
+            </button>
+          </div>        
+        </form>
+      <% } else { %>
+        <h1 class="display-4 jumbotronTitle">Welcome To YelpCamp!</h1>
+        <p class="lead">View our hand-picked campgrounds from all over the world</p>
+        <form action="/campgrounds" method="GET" class="input-group shadow-lg mt-3">        
+          <input type="text" class="form-control" type="text" name="search" placeholder="Search..." aria-label="Search">
+          <div class="input-group-append">
+            <button class="btn btn-danger" type="submit">
+              <i class="fa fa-search"></i>
+            </button>
+          </div>        
+        </form>
+      <!-- <a class="btn btn-outline-light mt-3" href="/campgrounds/new" role="button">New Campground</a>         -->
+      <% } %>      
     </div>
   </header>
 
@@ -23,14 +37,9 @@
             <div class="card-body">
               <h5 class="card-title">
                 <%= campground.name %>
-                  <a href="/campgrounds/<%= campground._id %>" class="btn btn-info btn-sm float-right">More Info</a>
+                <%= campground.rateAvg %>
+                  <a href="/campgrounds/<%= campground._id %>" class="btn btn-danger btn-sm float-right">More Info</a>
               </h5>
-
-              <!-- <% for(var i = 0; i < campground.tags.length; i++) { %>
-                <a href="/campgrounds/tag/<%= campground.tags[i] %>">#<%= campground.tags[i] %>
-                </a>
-              <% } %> -->
-
             </div>
           </div>
         </div>

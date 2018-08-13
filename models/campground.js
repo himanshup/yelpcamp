@@ -33,6 +33,8 @@ var campgroundSchema = new mongoose.Schema({
       ref: "Comment"
     }
   ],
+  rateAvg: Number,
+  rateCount: Number
 });
 
 module.exports = mongoose.model("Campground", campgroundSchema);

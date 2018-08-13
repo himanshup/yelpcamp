@@ -3,23 +3,27 @@
   <div class="container mt-5">
     <div class="row">
       <div class="col"></div>
-      <div class="col-sm-7 col-md-6 col-lg-5">
-        <h1 class="text-center display-4">Login</h1>
-        <form action="/login" method="POST">
-          <div class="form-group">
-            <input type="text" name="username" class="form-control text-center" id="exampleInputUsername" placeholder="Username">
+      <div class="col-sm-7 col-md-6 col-lg-5 mt-5">
+        <div class="card shadow border-0 p-4">
+          <h1 class="text-center display-4">Login</h1>
+          <form action="/login" method="POST">
+            <div class="form-group">
+              <input type="text" name="username" class="form-control text-center" id="exampleInputUsername" placeholder="Username">
+            </div>
+            <div class="form-group">
+              <input type="password" name="password" class="form-control text-center" id="exampleInputPassword1" placeholder="Password">
+            </div>
+            <button type="submit" class="btn btn-danger btn-block">Login</button>
+          </form>
+          <div class="mt-2 text-center">
+            Don't have an account?
+            <a href="/register">Sign Up</a>
           </div>
-          <div class="form-group">
-            <input type="password" name="password" class="form-control text-center" id="exampleInputPassword1" placeholder="Password">
-          </div>
-          <button type="submit" class="btn btn-primary btn-block">Login</button>
-        </form>
-       <div class="mt-2 text-center">
-          Don't have an account? <a href="/register">Sign Up</a>
-       </div>
+        </div>
+
       </div>
-      <div class="col">     </div>
+      <div class="col"> </div>
     </div>
   </div>
 
-<% include ./partials/footer %>
+  <% include ./partials/footer %>
