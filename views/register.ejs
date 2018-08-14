@@ -6,7 +6,10 @@
       <div class="col-sm-7 col-md-6 col-lg-5 mt-5">
         <div class="card shadow border-0 p-4">
           <h1 class="text-center display-4">Sign Up</h1>
-          <form class="needs-validation" action="/register" method="POST" novalidate>
+          <div>
+            <small class="text-muted">Fields marked * are optional.</small>
+          </div>
+          <form class="needs-validation" action="/register" enctype="multipart/form-data" method="POST" novalidate>
             <div class="form-group">
               <input type="text" name="fullName" class="form-control" id="fullName" placeholder="Full Name" required>
               <div class="invalid-feedback">
@@ -15,8 +18,8 @@
             </div>
             <div class="form-group">
               <div class="custom-file">
-                <input type="file" name="avatar" accept="image/*" class="custom-file-input" id="avatar" aria-describedby="inputGroupFileAddon01">
-                <label class="custom-file-label" for="inputGroupFile01">Avatar (Optional)</label>
+                <input type="file" name="image" accept="image/*" class="custom-file-input" id="image" aria-describedby="inputGroupFileAddon01">
+                <label class="custom-file-label" for="inputGroupFile01">Avatar*</label>
               </div>
             </div>
             <div class="form-group">
@@ -24,6 +27,9 @@
               <div class="invalid-feedback">
                 Please provide an email
               </div>
+            </div>
+            <div class="form-group">
+              <input type="text" name="phone" class="form-control" id="phone" placeholder="Phone*">
             </div>
             <div class="form-group">
               <input type="text" name="username" class="form-control" id="exampleInputUsername" placeholder="Username" required>
@@ -37,6 +43,7 @@
                 Please enter a password.
               </div>
             </div>
+            
             <button type="submit" class="btn btn-danger btn-block">Sign Up</button>
           </form>
           <div class="mt-2 text-center">

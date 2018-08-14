@@ -1,0 +1,97 @@
+<% include ../partials/header %>
+
+  <div class="container mt-4">
+    
+    <div class="row">
+      <div class="col-3">
+        <div id="profilePicture" class="card shadow-sm">
+          <% if(user.image.length < 1) { %>
+            <img class="card-img-top" src="https://basinred.com/wp-content/uploads/2016/09/default-user-img.jpg">
+          <% } else { %>
+            <img class="card-img-top" src="<%= user.image %>">
+          <% } %>
+          
+          <div class="card-body">
+            <h5 class="card-title">
+              <%= user.username %>             
+            </h5>
+            <div class="card-text">
+              alkjdflakjsdlfkjasljdkfal;kj
+            </div>    
+          </div>
+        </div>
+        <div class="card shadow-sm mt-3">
+          <div class="card-header">
+            About
+          </div>
+          <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                <strong>Name: </strong><%= user.fullName %>                
+              </li>
+              <li class="list-group-item">
+                <strong>Email: </strong><a href="mailto:<%= user.email %> "><%= user.email %></a>             
+              </li>
+              <li class="list-group-item">
+                <strong>Phone: </strong><%= user.phone %>              
+              </li>
+              <li class="list-group-item">
+                <strong>Joined: </strong><%= moment(user.joined).format('LL') %>              
+              </li>              
+              <% if (currentUser && user._id.equals(currentUser._id)) { %>
+                <li class="list-group-item">
+                  <a href="/users/<%= user._id %>/edit">Edit Profile</a>
+                  <form action="/users/<%= user._id %>?_method=DELETE" method="POST">
+                    <button>Delete</button>
+                  </form>
+                </li>
+              <% } %>             
+          </ul>
+        </div>
+      </div>
+      <div class="col-9">
+          <h3 class="text-center"><%= user.username %>'s Campgrounds</h3>
+        <div class="row">
+            <% campgrounds.forEach(function(campground) { %>
+              <div class="col-6">
+                <div class="card shadow-sm">
+                  <a href="/campgrounds/<%= campground._id %>"><img id="campgroundCard" class="card-img-top" src="<%= campground.image %>"></a> 
+                  <div class="card-body">
+                    <h5 class="card-title">
+                      <a href="/campgrounds/<%= campground._id %>"><%= campground.name %></a>
+                      <% if (campground.price > 100) { %>
+                        <small class="float-right text-muted">$$$</small>
+                      <% } else if (campgrounds.price < 50) { %>
+                        <small class="float-right text-muted">$</small>
+                      <% } else { %>
+                        <small class="float-right text-muted">$$</small>
+                      <% } %>
+                      <br>
+                      <% if(campground.comments.length === 0) { %>
+                        <small class="text-muted">No Reviews</small>
+                      <% } else { %>
+                        <% var stars = ['<small><i class="far fa-star text-danger"></i></small>', '<small><i class="far fa-star text-danger"></i></small>', '<small><i class="far fa-star text-danger"></i></small>', '<small><i class="far fa-star text-danger"></i></small>', '<small><i class="far fa-star text-danger"></i></small>'] %>
+                        <% for(var i = 0; i < Math.round(campground.rateAvg); i++) { %>
+                            <% stars[i] = '<small><i class="fas fa-star text-danger"></i></small>' %>
+                        <% } %> 
+                        <% for(var i = 0; i < stars.length; i++) { %>
+                          <%- stars[i] %>
+                        <% } %>
+                        <% if (campground.comments.length === 1) { %>
+                          <small class="text-muted"><%= campground.comments.length %> Review</small> 
+                        <% } else { %>
+                          <small class="text-muted"><%= campground.comments.length %> Reviews</small> 
+                        <% } %>                
+                      <% } %>                  
+                    </h5>              
+                    <!-- <a href="/campgrounds/<%= campground._id %>" class="btn btn-danger btn-sm">More Info</a> -->
+                  </div>
+                </div>
+              </div>
+              <% }) %>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <% include ../partials/footer %>

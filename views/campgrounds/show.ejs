@@ -120,9 +120,8 @@
             <hr>
             <p class="card-text text-muted">
               <small>Submitted by
-                <strong>
-                  <%= campground.author.username %>
-                </strong>on
+                <a href="/users/<%= campground.author.id %>">
+                  <%= campground.author.username %></a> on
                 <%= moment(campground.createdAt).format('LL') %>
               </small>
             </p>
@@ -187,9 +186,7 @@
               <li class="list-group-item">
                 <p>
                   <i class="fas fa-user"></i>
-                  <strong>
-                    <%= comment.author.username %>
-                  </strong>                                    
+                  <a href="/users/<%= comment.author.id %>"><%= comment.author.username %></a>                                   
                   <span class="float-right text-muted">                    
                     <% var stars2 = ['<small><i class="far fa-star text-danger"></i></small>', '<small><i class="far fa-star text-danger"></i></small>', '<small><i class="far fa-star text-danger"></i></small>', '<small><i class="far fa-star text-danger"></i></small>', '<small><i class="far fa-star text-danger"></i></small>'] %>
                     <% for(var i = 0; i < comment.rating; i++) { %>

@@ -18,58 +18,77 @@
     <div class="container">
       <% if (!currentUser) { %>
         <a class="navbar-brand" href="/">YelpCamp</a>
-      <% } else { %>
-        <a class="navbar-brand" href="/campgrounds">YelpCamp</a>
-      <% } %>      
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-        aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">        
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="/campgrounds">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/campgrounds/new">New Campground</a>
-          </li>
-        </ul>
-        <ul class="navbar-nav ml-auto">
-          <% if(!currentUser) { %>
-            <li class="nav-item">
-              <a class="nav-link" href="/login">Login</a>
-            </li>
-            <li class="nav-item">
-              <a class="btn btn-outline-light" href="/register">Sign Up</a>
-            </li>
-          <% } else { %>
-            <li class="nav-item">
-              <a class="nav-link" href=""><i class="fas fa-user"></i> <%= currentUser.username %>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link " href="/logout">Log Out</a>
-            </li>
+        <% } else { %>
+          <a class="navbar-brand" href="/campgrounds">YelpCamp</a>
           <% } %>
-        </ul>
-      </div>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+              aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mr-auto">
+                <li id="home" class="nav-item">
+                  <a class="nav-link" href="/campgrounds">Home</a>
+                </li>
+                <li id="newCampground" class="nav-item">
+                  <a class="nav-link" href="/campgrounds/new">New Campground</a>
+                </li>
+              </ul>
+              <ul class="navbar-nav ml-auto">
+                <% if(!currentUser) { %>
+                  <li id="login" class="nav-item">
+                    <a class="nav-link" href="/login">Login</a>
+                  </li>
+                  <li class="nav-item">
+                    <a id="register" class="btn btn-outline-light" href="/register">Sign Up</a>
+                  </li>
+                  <% } else { %>
+                    <li id="user" class="nav-item">
+                      <a class="nav-link" href="/users/<%= currentUser._id %>">
+                        <i class="fas fa-user"></i>
+                        <%= currentUser.username %>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link " href="/logout">Log Out</a>
+                    </li>
+                    <% } %>
+              </ul>
+            </div>
     </div>
   </nav>
   <div id="alertContainer" class="container bg-transparent">
     <% if(error && error.length > 0) { %>
-    <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
-      <%= error %>
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <% } %>
-    <% if(success && success.length > 0) { %>
-      <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
-        <%= success %>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+      <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+        <%= error %>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
       </div>
-    <% } %>
+      <% } %>
+        <% if(success && success.length > 0) { %>
+          <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+            <%= success %>
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <% } %>
   </div>
+  <script>
+    if (window.location.pathname === "/campgrounds") {
+      document.title = "YelpCamp";
+      document.getElementById("home").classList.toggle("active");
+    } else if (window.location.pathname === "/login") {
+      document.title = "Login";
+      document.getElementById("login").classList.toggle("active");
+    } else if (window.location.pathname === "/register") {
+      document.title = "Sign Up";
+      document.getElementById("register").classList.toggle("active");
+    } else if (window.location.pathname == "/campgrounds/new") {
+      document.title = "Add Campground"
+      document.getElementById("newCampground").classList.toggle("active");
+    } else if (window.location.href.indexOf("users")) {
+      document.getElementById("user").classList.toggle("active");
+    }
+  </script>

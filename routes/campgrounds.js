@@ -60,24 +60,6 @@ router.get("/", function(req, res) {
   }
 });
 
-router.get("/tag/:tag", function(req, res) {
-  Campground.find({ tags: req.params.tag }, function(err, allCampgrounds) {
-    if (err) {
-      req.flash("error", err.message);
-      return res.redirect("back");
-    } else if (!allCampgrounds.length) {
-      req.flash("error", "Sorry, there are no campgrounds with that tag!");
-      return res.redirect("/campgrounds");
-    } else {
-      res.render("campgrounds/tags", {
-        campgrounds: allCampgrounds,
-        currentUser: req.user,
-        foundTag: req.params.tag
-      });
-    }
-  });
-});
-
 // CREATE - add new campground to db
 router.post("/", middleware.isLoggedIn, upload.single("image"), function(
   req,
