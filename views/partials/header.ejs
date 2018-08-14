@@ -30,6 +30,9 @@
                 <li id="home" class="nav-item">
                   <a class="nav-link" href="/campgrounds">Home</a>
                 </li>
+                <li id="home" class="nav-item">
+                  <a class="nav-link" href="/about">About</a>
+                </li>
                 <li id="newCampground" class="nav-item">
                   <a class="nav-link" href="/campgrounds/new">New Campground</a>
                 </li>
@@ -52,7 +55,7 @@
                     <li class="nav-item">
                       <a class="nav-link " href="/logout">Log Out</a>
                     </li>
-                    <% } %>
+                  <% } %>
               </ul>
             </div>
     </div>
@@ -88,7 +91,5 @@
     } else if (window.location.pathname == "/campgrounds/new") {
       document.title = "Add Campground"
       document.getElementById("newCampground").classList.toggle("active");
-    } else if (window.location.href.indexOf("users")) {
-      document.getElementById("user").classList.toggle("active");
     }
   </script>

@@ -4,7 +4,7 @@
     <div class="row">
       <div class="col-md-3">
         <div class="d-none d-md-block">
-          <p class="lead text-center mt-3">
+          <p class="lead text-center mt-3 text-capitalize">
             <%= campground.name %>
           </p>
           <div class="card shadow-sm">
@@ -12,7 +12,7 @@
               <i class="fas fa-map-marker-alt"></i> Location
             </div>
             <ul class="list-group list-group-flush">
-              <li class="list-group-item"><%= campground.address.street %> <br> <%= campground.address.city %>, <%= campground.address.state %> <%= campground.address.zip %></li>
+              <li class="list-group-item text-capitalize"><%= campground.address.street %> <br> <%= campground.address.city %>, <%= campground.address.state %> <%= campground.address.zip %></li>
             </ul>
           </div>    
           <div class="card shadow-sm mt-3">
@@ -20,7 +20,7 @@
               <i class="far fa-calendar-alt"></i> Booking Window
             </div>
             <ul class="list-group list-group-flush">
-              <li class="list-group-item"><%= campground.booking.start %> - <%= campground.booking.end %></li>
+              <li class="list-group-item text-capitalize"><%= campground.booking.start %> - <%= campground.booking.end %></li>
             </ul>
           </div>
           <% if (campground.tags[0] === "") { %>
@@ -119,15 +119,15 @@
             </p>
             <hr>
             <p class="card-text text-muted">
-              <small>Submitted by
+              <span>Submitted by
                 <a href="/users/<%= campground.author.id %>">
                   <%= campground.author.username %></a> on
                 <%= moment(campground.createdAt).format('LL') %>
-              </small>
+              </span>
             </p>
             <% if(currentUser && campground.author.id.equals(currentUser._id)) { %>
               <form id="deleteForm" action="/campgrounds/<%= campground._id %>?_method=DELETE" method="POST" class="float-right">
-                <button class="btn text-dark btn-lg float">
+                <button class="btn text-dark btn-lg">
                   <i class="fas fa-trash-alt"></i>
                 </button>
               </form>
@@ -139,9 +139,22 @@
         </div>
         <div class="card shadow-sm mt-4" id="comments">
           <ul class="list-group list-group-flush">
-            <li id="commentItem" class="list-group-item list-group-item-light">
-              <button class="btn btn-danger float-right" data-toggle="collapse" data-target="#collapseComment" aria-expanded="false" aria-controls="collapseComment">Leave a Review</button>
-            </li>
+            <% if(currentUser && campground.author.id.equals(currentUser._id)) { %>
+              <li id="commentItem" class="list-group-item list-group-item-light">
+                Your campground has 
+                <% if (campground.comments.length === 0) { %>
+                    no reviews.
+                <% } else if (campground.comments.length === 1) { %>
+                      1 review
+                <% } else { %>
+                  <%= campground.comments.length %> reviews
+                <% } %>                
+              </li>
+            <% } else { %>
+              <li id="commentItem" class="list-group-item list-group-item-light">
+                <button class="btn btn-danger float-right" data-toggle="collapse" data-target="#collapseComment" aria-expanded="false" aria-controls="collapseComment">Leave a Review</button>
+              </li>
+            <% } %>            
             <div class="collapse" id="collapseComment">
               <div class="card-body">
                 <form class="needs-validation" action="/campgrounds/<%= campground._id %>/comments" method="POST" novalidate>

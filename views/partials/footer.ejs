@@ -11,7 +11,14 @@
 <script src="https://unpkg.com/scrollreveal"></script>
 <script>
   // ScrollReveal().reveal('.jumbotron-text', { duration: 2000 });
-  ScrollReveal().reveal('.indexCards', { interval: 150 });
+  ScrollReveal().reveal('.indexCards', {
+    interval: 150, mobile: true, viewOffset: {
+      top: 0,
+      right: 0,
+      bottom: 100,
+      left: 0,
+    },
+  });
 
   (function () {
     'use strict';

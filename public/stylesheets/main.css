@@ -8,6 +8,10 @@ body {
   background: #f7f7f7;
 }
 
+a {
+  color: #0073bb;
+}
+
 .jumbotron {
   background: linear-gradient(rgba(70, 70, 70, 0.35), rgba(70, 70, 70, 0.35)),
     url(https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=d9df10d159cc11074d9a7996e8aca442&auto=format&fit=crop&w=1500&q=80);

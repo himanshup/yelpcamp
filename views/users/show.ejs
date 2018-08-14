@@ -1,9 +1,8 @@
 <% include ../partials/header %>
 
-  <div class="container mt-4">
-    
+  <div class="container mt-4">    
     <div class="row">
-      <div class="col-3">
+      <div class="col-12 col-md-6 col-lg-3">
         <div id="profilePicture" class="card shadow-sm">
           <% if(user.image.length < 1) { %>
             <img class="card-img-top" src="https://basinred.com/wp-content/uploads/2016/09/default-user-img.jpg">
@@ -12,85 +11,89 @@
           <% } %>
           
           <div class="card-body">
-            <h5 class="card-title">
-              <%= user.username %>             
-            </h5>
-            <div class="card-text">
-              alkjdflakjsdlfkjasljdkfal;kj
-            </div>    
+            <h5 class="card-title"><%= user.fullName %></h5>
+            <h6 class="card-subtitle mb-2 text-muted">@<%= user.username %></h6>  
           </div>
         </div>
-        <div class="card shadow-sm mt-3">
+        <div class="card shadow-sm mt-3 mb-3">
           <div class="card-header">
-            About
+            About <%= user.fullName %>
           </div>
           <ul class="list-group list-group-flush">
               <li class="list-group-item">
-                <strong>Name: </strong><%= user.fullName %>                
+                <i class="fas fa-envelope"></i> <strong>Email: </strong><a href="mailto:<%= user.email %> "><%= user.email %></a>             
               </li>
               <li class="list-group-item">
-                <strong>Email: </strong><a href="mailto:<%= user.email %> "><%= user.email %></a>             
+                <i class="fas fa-phone"></i> <strong>Phone: </strong><span class="text-muted"><%= user.phone %>    </span>          
               </li>
               <li class="list-group-item">
-                <strong>Phone: </strong><%= user.phone %>              
-              </li>
-              <li class="list-group-item">
-                <strong>Joined: </strong><%= moment(user.joined).format('LL') %>              
+                <i class="far fa-calendar-alt"></i> <strong>Joined: </strong><span class="text-muted"><%= moment(user.joined).format('LL') %> </span>             
               </li>              
               <% if (currentUser && user._id.equals(currentUser._id)) { %>
-                <li class="list-group-item">
-                  <a href="/users/<%= user._id %>/edit">Edit Profile</a>
-                  <form action="/users/<%= user._id %>?_method=DELETE" method="POST">
-                    <button>Delete</button>
+                <li class="list-group-item d-flex justify-content-center">
+                  <a class="btn btn-warning btn-sm float-left mr-1" href="/users/<%= user._id %>/edit">Edit Profile</a>
+                  <form class="float-left" action="/users/<%= user._id %>?_method=DELETE" method="POST">
+                    <button type="submit" class="btn btn-danger btn-sm">Delete Account</button>
                   </form>
                 </li>
               <% } %>             
           </ul>
         </div>
       </div>
-      <div class="col-9">
-          <h3 class="text-center"><%= user.username %>'s Campgrounds</h3>
-        <div class="row">
-            <% campgrounds.forEach(function(campground) { %>
-              <div class="col-6">
-                <div class="card shadow-sm">
-                  <a href="/campgrounds/<%= campground._id %>"><img id="campgroundCard" class="card-img-top" src="<%= campground.image %>"></a> 
-                  <div class="card-body">
-                    <h5 class="card-title">
-                      <a href="/campgrounds/<%= campground._id %>"><%= campground.name %></a>
-                      <% if (campground.price > 100) { %>
-                        <small class="float-right text-muted">$$$</small>
-                      <% } else if (campgrounds.price < 50) { %>
-                        <small class="float-right text-muted">$</small>
-                      <% } else { %>
-                        <small class="float-right text-muted">$$</small>
+      <div class="col-12 col-md-6 col-lg-9">
+        <% if (currentUser && user._id.equals(currentUser._id)) { %>
+          <h2 class="text-center">Your Campgrounds</h2>
+          <% if(campgrounds.length === 0) { %>
+            <p class="lead mt-4 text-center text-muted">
+              You don't have any campgrounds, click <a href="/campgrounds/new">here</a> to create one!
+            </p>
+          <% } %>
+        <% } else if (campgrounds.length === 0) { %>
+          <h2 class="text-center"><%= user.fullName %> doesn't have any Campgrounds</h2>
+        <% } else { %>
+          <h2 class="text-center"><%= user.fullName %>'s Campgrounds</h2>
+        <% } %>        
+        <div class="row">          
+          <% campgrounds.forEach(function(campground) { %>
+            <div class="col-12 col-lg-6">
+              <div class="card shadow-sm mt-3">
+                <a href="/campgrounds/<%= campground._id %>"><img id="campgroundCard" class="card-img-top" src="<%= campground.image %>"></a> 
+                <div class="card-body">
+                  <h5 class="card-title">
+                    <a href="/campgrounds/<%= campground._id %>"><%= campground.name %></a>
+                    <% if (campground.price > 100) { %>
+                      <small class="float-right text-muted">$$$</small>
+                    <% } else if (campgrounds.price > 50) { %>
+                      <small class="float-right text-muted">$$</small>
+                    <% } else { %>
+                      <small class="float-right text-muted">$</small>
+                    <% } %>
+                                      
+                  </h5>              
+                  <h6 class="card-subtitle">
+                    <% if(!campground.comments.length) { %>
+                      <span class="text-muted">No Reviews</span>
+                    <% } else { %>
+                      <% var stars = ['<i class="far fa-star text-danger"></i>', '<i class="far fa-star text-danger"></i>', '<i class="far fa-star text-danger"></i>', '<i class="far fa-star text-danger"></i>', '<i class="far fa-star text-danger"></i>'] %>
+                      <% for(var i = 0; i < Math.round(campground.rateAvg); i++) { %>
+                          <% stars[i] = '<i class="fas fa-star text-danger"></i>' %>
+                      <% } %> 
+                      <% for(var i = 0; i < stars.length; i++) { %>
+                        <%- stars[i] %>
                       <% } %>
-                      <br>
-                      <% if(campground.comments.length === 0) { %>
-                        <small class="text-muted">No Reviews</small>
+                      <% if (campground.comments.length === 1) { %>
+                        <span class="text-muted"><%= campground.comments.length %> Review</span> 
                       <% } else { %>
-                        <% var stars = ['<small><i class="far fa-star text-danger"></i></small>', '<small><i class="far fa-star text-danger"></i></small>', '<small><i class="far fa-star text-danger"></i></small>', '<small><i class="far fa-star text-danger"></i></small>', '<small><i class="far fa-star text-danger"></i></small>'] %>
-                        <% for(var i = 0; i < Math.round(campground.rateAvg); i++) { %>
-                            <% stars[i] = '<small><i class="fas fa-star text-danger"></i></small>' %>
-                        <% } %> 
-                        <% for(var i = 0; i < stars.length; i++) { %>
-                          <%- stars[i] %>
-                        <% } %>
-                        <% if (campground.comments.length === 1) { %>
-                          <small class="text-muted"><%= campground.comments.length %> Review</small> 
-                        <% } else { %>
-                          <small class="text-muted"><%= campground.comments.length %> Reviews</small> 
-                        <% } %>                
-                      <% } %>                  
-                    </h5>              
-                    <!-- <a href="/campgrounds/<%= campground._id %>" class="btn btn-danger btn-sm">More Info</a> -->
-                  </div>
+                        <span class="text-muted"><%= campground.comments.length %> Reviews</span> 
+                      <% } %>                
+                    <% } %>   
+                  </h6> 
                 </div>
               </div>
-              <% }) %>
-        </div>
-        
-      </div>
+            </div>
+          <% }) %>
+        </div>        
+      </p>
     </div>
   </div>
 

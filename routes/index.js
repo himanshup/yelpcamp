@@ -3,6 +3,7 @@ var router = express.Router();
 var passport = require("passport");
 var User = require("../models/user");
 var Campground = require("../models/campground");
+var Comment = require("../models/comment");
 var middleware = require("../middleware");
 var multer = require("multer");
 var storage = multer.diskStorage({
@@ -186,13 +187,13 @@ router.delete("/users/:user_id", middleware.checkProfileOwnership, function(
     }
     if (user.image === "") {
       user.remove();
-      req.flash("success", "You deleted your account");
+      req.flash("success", "Successfully deleted your account");
       res.redirect("/");
     } else {
       try {
         await cloudinary.v2.uploader.destroy(user.imageId);
         user.remove();
-        req.flash("success", "You deleted your account");
+        req.flash("success", "Successfully deleted your account");
         res.redirect("/");
       } catch (err) {
         if (err) {
