@@ -140,8 +140,22 @@ router.get("/:id", function(req, res) {
         req.flash("error", "Sorry, that campground does not exist!");
         return res.redirect("/campgrounds");
       }
+      var ratingsArray = [];
+
+      foundCampground.comments.forEach(function(rating) {
+        ratingsArray.push(rating.rating);
+      });
+      if (ratingsArray.length === 0) {
+        foundCampground.rateAvg = 0;
+      } else {
+        var ratings = ratingsArray.reduce(function(total, rating) {
+          return total + rating;
+        });
+        foundCampground.rateAvg = ratings / foundCampground.comments.length;
+      }
+
       // foundCampground.rateCount = foundCampground.comments.length;
-      // foundCampground.save();
+      foundCampground.save();
       res.render("campgrounds/show", { campground: foundCampground });
     });
 });

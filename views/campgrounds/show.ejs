@@ -58,7 +58,7 @@
             <h5 class="card-title">
               <%= campground.name %>
               <div>
-                <% var ratingsArray = [] %>
+                <!-- <% var ratingsArray = [] %>
                 <% var rateAvg = 0 %>
               
                 <% campground.comments.forEach(function(rating) { %>
@@ -72,12 +72,12 @@
                       <% return total + rating %>
                   <% }) %>
                   <% rateAvg = ratings / campground.comments.length %>
-                <% } %>
+                <% } %> -->
                 <% if(campground.comments.length === 0) { %>
                   <small class="text-muted">No Reviews</small>
                 <% } else { %>
                   <% var stars = ['<small><i class="far fa-star text-danger"></i></small>', '<small><i class="far fa-star text-danger"></i></small>', '<small><i class="far fa-star text-danger"></i></small>', '<small><i class="far fa-star text-danger"></i></small>', '<small><i class="far fa-star text-danger"></i></small>'] %>
-                  <% for(var i = 0; i < rateAvg; i++) { %>
+                  <% for(var i = 0; i < Math.round(campground.rateAvg); i++) { %>
                       <% stars[i] = '<small><i class="fas fa-star text-danger"></i></small>' %>
                   <% } %> 
                   <% for(var i = 0; i < stars.length; i++) { %>
@@ -87,12 +87,9 @@
                     <small class="text-muted"><%= campground.comments.length %> Review</small> 
                   <% } else { %>
                     <small class="text-muted"><%= campground.comments.length %> Reviews</small> 
-                  <% } %>
-                  
+                  <% } %>                  
                 <% } %>
-              </div>
-                  
-              
+              </div>                                
             </h5>
             <p class="card-text">
               <%= campground.description %>
@@ -102,8 +99,7 @@
                 <%= campground.address.street %> <br> <%= campground.address.city %>, <%= campground.address.state %> <%= campground.address.zip %>
                 <hr>
                 <h5 class="card-title"><i class="far fa-calendar-alt"></i> Booking Window</h5>
-                <%= campground.booking.start %> - <%= campground.booking.end %>
-                
+                <%= campground.booking.start %> - <%= campground.booking.end %>                
                 <% if (campground.tags[0] === "") { %>
                   <% ; %>
                 <% } else { %>

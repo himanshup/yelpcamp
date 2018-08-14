@@ -17,26 +17,46 @@ router.get("/new", middleware.isLoggedIn, function(req, res) {
 
 // Comments create
 router.post("/", middleware.isLoggedIn, function(req, res) {
-  Campground.findById(req.params.id, function(err, campground) {
+  Campground.findById(req.params.id, function(err, found) {
     if (err) {
       console.log(err);
-      res.redirect("/campgrounds");
+    }
+    var ratedArray = [];
+    found.hasRated.forEach(function(rated) {
+      ratedArray.push(String(rated));
+    });
+    console.log(ratedArray);
+    console.log(String(req.user._id));
+    if (ratedArray.includes(String(req.user._id))) {
+      req.flash(
+        "error",
+        "You've already reviewed this campgroud, please edit your review instead."
+      );
+      res.redirect("/campgrounds/" + req.params.id);
     } else {
-      var newComment = req.body.comment;
-      Comment.create(newComment, function(err, comment) {
+      Campground.findById(req.params.id, function(err, campground) {
         if (err) {
-          req.flash("error", "Something went wrong.");
+          console.log(err);
           res.redirect("/campgrounds");
         } else {
-          // add username and id to comment
-          comment.author.id = req.user._id;
-          comment.author.username = req.user.username;
-          // save comment
-          comment.save();
-          campground.comments.push(comment);
-          campground.save();
-          req.flash("success", "Successfully added review!");
-          res.redirect("/campgrounds/" + campground._id);
+          var newComment = req.body.comment;
+          Comment.create(newComment, function(err, comment) {
+            if (err) {
+              req.flash("error", "Something went wrong.");
+              res.redirect("/campgrounds");
+            } else {
+              // add username and id to comment
+              comment.author.id = req.user._id;
+              comment.author.username = req.user.username;
+              campground.hasRated.push(req.user._id);
+              // save comment
+              comment.save();
+              campground.comments.push(comment);
+              campground.save();
+              req.flash("success", "Successfully added review!");
+              res.redirect("/campgrounds/" + campground._id);
+            }
+          });
         }
       });
     }
@@ -89,8 +109,15 @@ router.delete("/:comment_id", middleware.checkCommentOwnership, function(
         function(err) {
           if (err) {
             console.log(err);
-          } else {
-            console.log("updated the campground comments array");
+          }
+        }
+      );
+      Campground.findByIdAndUpdate(
+        req.params.id,
+        { $pull: { hasRated: { $in: [req.user._id] } } },
+        function(err) {
+          if (err) {
+            console.log(er);
           }
         }
       );

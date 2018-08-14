@@ -16,7 +16,11 @@
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
     <div class="container">
-      <a class="navbar-brand" href="/">YelpCamp</a>
+      <% if (!currentUser) { %>
+        <a class="navbar-brand" href="/">YelpCamp</a>
+      <% } else { %>
+        <a class="navbar-brand" href="/campgrounds">YelpCamp</a>
+      <% } %>      
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
         aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -26,6 +30,9 @@
           <li class="nav-item">
             <a class="nav-link" href="/campgrounds">Home</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/campgrounds/new">New Campground</a>
+          </li>
         </ul>
         <ul class="navbar-nav ml-auto">
           <% if(!currentUser) { %>
@@ -33,7 +40,7 @@
               <a class="nav-link" href="/login">Login</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/register">Sign Up</a>
+              <a class="btn btn-outline-light" href="/register">Sign Up</a>
             </li>
           <% } else { %>
             <li class="nav-item">

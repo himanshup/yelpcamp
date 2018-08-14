@@ -5,7 +5,7 @@
       <% if(noMatch !== null) { %>
         <h3 class="jumbotext"><%= noMatch %> </h3>
         <form action="/campgrounds" method="GET" class="input-group shadow-lg mt-3">        
-          <input type="text" class="form-control" type="text" name="search" placeholder="Search..." aria-label="Search">
+          <input type="text" class="form-control" type="text" name="search" placeholder="Search Campgrounds..." aria-label="Search">
           <div class="input-group-append">
             <button class="btn btn-danger" type="submit">
               <i class="fa fa-search"></i>
@@ -16,14 +16,14 @@
         <h1 class="display-4 jumbotronTitle">Welcome To YelpCamp!</h1>
         <p class="lead">View our hand-picked campgrounds from all over the world</p>
         <form action="/campgrounds" method="GET" class="input-group shadow-lg mt-3">        
-          <input type="text" class="form-control" type="text" name="search" placeholder="Search..." aria-label="Search">
+          <input type="text" class="form-control" type="text" name="search" placeholder="Search Campgrounds..." aria-label="Search">
           <div class="input-group-append">
             <button class="btn btn-danger" type="submit">
               <i class="fa fa-search"></i>
             </button>
           </div>        
         </form>
-      <a class="btn btn-outline-light mt-3" href="/campgrounds/new" role="button">New Campground</a>        
+      <!-- <a class="btn btn-outline-light mt-3" href="/campgrounds/new" role="button">New Campground</a>         -->
       <% } %>      
     </div>
   </header>
@@ -33,13 +33,36 @@
       <% campgrounds.forEach(function(campground) { %>
         <div class="col-sm-12 col-md-6 col-lg-4">
           <div class="card indexCards shadow border-0 mt-4">
-            <img id="campgroundCard" class="card-img-top" src="<%= campground.image %>">
+            <a href="/campgrounds/<%= campground._id %>"><img id="campgroundCard" class="card-img-top" src="<%= campground.image %>"></a> 
             <div class="card-body">
               <h5 class="card-title">
-                <%= campground.name %>
-                <%= campground.rateAvg %>
-                  <a href="/campgrounds/<%= campground._id %>" class="btn btn-danger btn-sm float-right">More Info</a>
-              </h5>
+                <a href="/campgrounds/<%= campground._id %>"><%= campground.name %></a>
+                <% if (campground.price > 100) { %>
+                  <small class="float-right text-muted">$$$</small>
+                <% } else if (campgrounds.price < 50) { %>
+                  <small class="float-right text-muted">$</small>
+                <% } else { %>
+                  <small class="float-right text-muted">$$</small>
+                <% } %>
+                <br>
+                <% if(campground.comments.length === 0) { %>
+                  <small class="text-muted">No Reviews</small>
+                <% } else { %>
+                  <% var stars = ['<small><i class="far fa-star text-danger"></i></small>', '<small><i class="far fa-star text-danger"></i></small>', '<small><i class="far fa-star text-danger"></i></small>', '<small><i class="far fa-star text-danger"></i></small>', '<small><i class="far fa-star text-danger"></i></small>'] %>
+                  <% for(var i = 0; i < Math.round(campground.rateAvg); i++) { %>
+                      <% stars[i] = '<small><i class="fas fa-star text-danger"></i></small>' %>
+                  <% } %> 
+                  <% for(var i = 0; i < stars.length; i++) { %>
+                    <%- stars[i] %>
+                  <% } %>
+                  <% if (campground.comments.length === 1) { %>
+                    <small class="text-muted"><%= campground.comments.length %> Review</small> 
+                  <% } else { %>
+                    <small class="text-muted"><%= campground.comments.length %> Reviews</small> 
+                  <% } %>                
+                <% } %>                  
+              </h5>              
+              <!-- <a href="/campgrounds/<%= campground._id %>" class="btn btn-danger btn-sm">More Info</a> -->
             </div>
           </div>
         </div>
