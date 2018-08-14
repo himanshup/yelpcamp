@@ -6,12 +6,36 @@
       <div class="col-sm-7 col-md-6 col-lg-5 mt-5">
         <div class="card shadow border-0 p-4">
           <h1 class="text-center display-4">Sign Up</h1>
-          <form action="/register" method="POST">
+          <form class="needs-validation" action="/register" method="POST" novalidate>
             <div class="form-group">
-              <input type="text" name="username" class="form-control text-center" id="exampleInputUsername" placeholder="Username">
+              <input type="text" name="fullName" class="form-control" id="fullName" placeholder="Full Name" required>
+              <div class="invalid-feedback">
+                Please enter your name.
+              </div>
             </div>
             <div class="form-group">
-              <input type="password" name="password" class="form-control text-center" id="exampleInputPassword1" placeholder="Password">
+              <div class="custom-file">
+                <input type="file" name="avatar" accept="image/*" class="custom-file-input" id="avatar" aria-describedby="inputGroupFileAddon01">
+                <label class="custom-file-label" for="inputGroupFile01">Avatar (Optional)</label>
+              </div>
+            </div>
+            <div class="form-group">
+              <input type="text" name="email" class="form-control" id="email" placeholder="Email" required>
+              <div class="invalid-feedback">
+                Please provide an email
+              </div>
+            </div>
+            <div class="form-group">
+              <input type="text" name="username" class="form-control" id="exampleInputUsername" placeholder="Username" required>
+              <div class="invalid-feedback">
+                Please choose a username
+              </div>
+            </div>
+            <div class="form-group">
+              <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required>
+              <div class="invalid-feedback">
+                Please enter a password.
+              </div>
             </div>
             <button type="submit" class="btn btn-danger btn-block">Sign Up</button>
           </form>
