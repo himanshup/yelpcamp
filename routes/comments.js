@@ -25,8 +25,6 @@ router.post("/", middleware.isLoggedIn, function(req, res) {
     found.hasRated.forEach(function(rated) {
       ratedArray.push(String(rated));
     });
-    console.log(ratedArray);
-    console.log(String(req.user._id));
     if (ratedArray.includes(String(req.user._id))) {
       req.flash(
         "error",
