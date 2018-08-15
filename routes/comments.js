@@ -41,12 +41,13 @@ router.post("/", middleware.isLoggedIn, function(req, res) {
           Comment.create(newComment, function(err, comment) {
             if (err) {
               req.flash("error", "Something went wrong.");
-              res.redirect("/campgrounds");
+              res.render("error");
             } else {
               // add username and id to comment
               comment.author.id = req.user._id;
               comment.author.username = req.user.username;
               campground.hasRated.push(req.user._id);
+              campground.rateCount = campground.comments.length;
               // save comment
               comment.save();
               campground.comments.push(comment);

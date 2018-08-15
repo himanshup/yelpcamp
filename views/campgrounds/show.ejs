@@ -1,21 +1,14 @@
 <% include ../partials/header %>
+<% include ../partials/errorMsg %>
 
   <div id="campgroundsContainer" class="container">
     <div class="row">
       <div class="col-md-3">
         <div class="d-none d-md-block">
-          <p class="lead text-center mt-3 text-capitalize">
+          <div class="lead text-center mt-3 text-capitalize">
             <%= campground.name %>
-          </p>
-          <div class="card shadow-sm">
-            <div class="card-header">
-              <i class="fas fa-map-marker-alt"></i> Location
-            </div>
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item text-capitalize"><%= campground.address.street %> <br> <%= campground.address.city %>, <%= campground.address.state %> <%= campground.address.zip %></li>
-            </ul>
-          </div>    
-          <div class="card shadow-sm mt-3">
+          </div>            
+          <div class="card shadow-sm mt-2">
             <div class="card-header">
               <i class="far fa-calendar-alt"></i> Booking Window
             </div>
@@ -40,13 +33,13 @@
               </div>
           <% } %> 
           <div class="card shadow-sm mt-3">
-            <div class="card-header">
-              <i class="fas fa-phone"></i> Contact
-            </div>
+            <div id="map"></div>
             <ul class="list-group list-group-flush">
-              <li class="list-group-item"><%= campground.phone %></li>
+              <li class="list-group-item text-capitalize"><i class="fas fa-map-marker-alt"></i> <%= campground.location %></li>
+              <li class="list-group-item"><i class="fas fa-phone"></i> <%= campground.phone %></li>
             </ul>
-          </div>
+          </div>   
+          
         </div>
       </div>
       <div class="col-md-9">
@@ -58,21 +51,6 @@
             <h5 class="card-title">
               <%= campground.name %>
               <div>
-                <!-- <% var ratingsArray = [] %>
-                <% var rateAvg = 0 %>
-              
-                <% campground.comments.forEach(function(rating) { %>
-                    <% ratingsArray.push(rating.rating) %>
-                <% }) %>
-
-                <% if (ratingsArray.length === 0) { %>
-                    <% ; %>
-                <% } else { %>
-                  <% var ratings = ratingsArray.reduce(function(total, rating) { %>
-                      <% return total + rating %>
-                  <% }) %>
-                  <% rateAvg = ratings / campground.comments.length %>
-                <% } %> -->
                 <% if(campground.comments.length === 0) { %>
                   <small class="text-muted">No Reviews</small>
                 <% } else { %>
@@ -95,9 +73,6 @@
               <%= campground.description %>
               <div class="d-block d-sm-none d-none d-sm-block d-md-none">
                 <hr>
-                <h5 class="card-title"><i class="fas fa-map-marker-alt"></i> Location</h5>
-                <%= campground.address.street %> <br> <%= campground.address.city %>, <%= campground.address.state %> <%= campground.address.zip %>
-                <hr>
                 <h5 class="card-title"><i class="far fa-calendar-alt"></i> Booking Window</h5>
                 <%= campground.booking.start %> - <%= campground.booking.end %>                
                 <% if (campground.tags[0] === "") { %>
@@ -115,6 +90,9 @@
                 <hr>
                 <h5 class="card-title"><i class="fas fa-phone"></i> Contact</h5>
                 <%= campground.phone %>
+                <hr>
+                <h5 class="card-title"><i class="fas fa-map-marker-alt"></i> Location</h5>
+                <%= campground.location %>
               </div>              
             </p>
             <hr>
@@ -127,7 +105,7 @@
             </p>
             <% if(currentUser && campground.author.id.equals(currentUser._id)) { %>
               <form id="deleteForm" action="/campgrounds/<%= campground._id %>?_method=DELETE" method="POST" class="float-right">
-                <button class="btn text-dark btn-lg">
+                <button class="delBtn btn text-dark btn-lg">
                   <i class="fas fa-trash-alt"></i>
                 </button>
               </form>
@@ -220,7 +198,7 @@
                       <i class="fas fa-pencil-alt"></i>
                     </a>
                     <form id="deleteForm2" action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST" class="float-right">
-                      <button class="btn text-dark">
+                      <button class="delBtn btn text-dark">
                         <i class="fas fa-trash-alt"></i>
                       </button>
                     </form>
@@ -266,5 +244,30 @@
       </div>
     </div>
   </div>
+
+  <script>
+      function initMap() {
+        var lat = <%= campground.lat %>;
+        var lng = <%= campground.lng %>;
+        var center = {lat: lat, lng: lng };
+        var map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 8,
+            center: center,
+            scrollwheel: false
+        });
+        var contentString = "<%= campground.location %>";                
+        var infowindow = new google.maps.InfoWindow({
+          content: contentString
+        });
+        var marker = new google.maps.Marker({
+            position: center,
+            map: map
+        });
+        marker.addListener("click", function() {
+          infowindow.open(map, marker);
+        });
+      }
+  </script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEgVKHwajPQq9PK-6ddk19KM83duXX8E0&callback=initMap"></script>
 
   <% include ../partials/footer %>

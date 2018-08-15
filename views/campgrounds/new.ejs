@@ -1,23 +1,25 @@
 <% include ../partials/header %>
 
-  <div class="container mt-5">
-    <h1 class="text-center">Create a New Campground</h1>
+  <div class="container mt-4">
     <div class="row">
       <div class="col">
-
       </div>
       <div class="col-12 col-sm-12 col-lg-9">
         <div class="card shadow border-0 p-4">
+          <h1 class="text-center">Create a New Campground</h1>
+          <div>
+            <small class="text-muted">Fields marked * are required.</small>
+          </div>
           <form action="/campgrounds" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
             <div class="form-group">
-              <label for="">Name</label>
+              <label for="">Name*</label>
               <input type="text" class="form-control" name="campground[name]" placeholder="Name" required>
               <div class="invalid-feedback">
                 Please provide a campground name.
               </div>
             </div>
             <div class="form-group">
-              <label for="">Price/Night</label>
+              <label for="">Price/Night*</label>
               <input type="number" class="form-control" name="campground[price]" placeholder="Price/Night" min="0.01" step="0.01" required>
               <div class="invalid-feedback">
                 Please provide a price.
@@ -30,57 +32,31 @@
                 <div class="invalid-feedback">
                   Please upload an image of your campground.
                 </div>
-                <label class="custom-file-label" for="inputGroupFile01">Image</label>
+                <label class="custom-file-label" for="inputGroupFile01">Image*</label>
               </div>
             </div>
             <div class="form-group">
-              <label for="exampleFormControlTextarea1">Description</label>
+              <label for="exampleFormControlTextarea1">Description*</label>
               <textarea class="form-control" id="exampleFormControlTextarea1" name="campground[description]" rows="3" required></textarea>
               <div class="invalid-feedback">
                 Please provide a description of your campground.
               </div>
             </div>
             <div class="form-group">
-              <label for="">Address</label>
-              <input type="text" class="form-control" name="campground[street]" placeholder="Address" required>
+              <label for="location">Location*</label>
+              <input type="text" class="form-control" name="campground[location]" placeholder="Yosemite National Park, CA" id="location" required>
               <div class="invalid-feedback">
-                Please provide a valid address.
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group col-md-6">
-                <label for="inputCity">City</label>
-                <input type="text" class="form-control" id="inputCity" name="campground[city]" placeholder="San Jose" required>
-                <div class="invalid-feedback">
-                  Please provide a valid city.
-                </div>
-              </div>
-              <div class="form-group col-md-4">
-                <label for="inputState">State</label>
-                <input type="text" class="form-control" id="inputState" name="campground[state]" placeholder="CA" required>
-                <div class="invalid-feedback">
-                  Please provide a valid state.
-                </div>
-              </div>
-              <div class="invalid-feedback">
-                Please provide a booking window.
-              </div>
-              <div class="form-group col-md-2">
-                <label for="inputZip">Zip</label>
-                <input type="text" class="form-control" id="inputZip" name="campground[zip]" placeholder="12345" required>
-                <div class="invalid-feedback">
-                  Please provide a valid zip.
-                </div>
+                Please provide a valid location
               </div>
             </div>
             <div class="form-group">
-              <label for="">Phone Number</label>
+              <label for="">Phone Number*</label>
               <input type="text" class="form-control" name="campground[phone]" placeholder="123-456-7891" required>
               <div class="invalid-feedback">
                 Please provide a phone number.
               </div>
             </div>
-            <label for="">Booking Window</label>
+            <label for="">Booking Window*</label>
             <div class="form-row">
               <div class="form-group col-md-6">
                 <input type="text" class="form-control" name="campground[start]" placeholder="Starting Month" required>
@@ -93,9 +69,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label for="">Amenities separated by commas
-                <span class="text-muted">(Optional)</span>
-              </label>
+              <label for="">Amenities separated by commas*</label>
               <input type="text" class="form-control" name="campground[tags]" placeholder="Example: boating,fishing,wifi">
             </div>
             <button type="submit" class="btn btn-danger btn-block">Submit</button>

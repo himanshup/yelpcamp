@@ -32,6 +32,10 @@ router.get("/", function(req, res) {
   res.render("landing");
 });
 
+router.get("/about", function(req, res) {
+  res.render("about");
+});
+
 // show register form
 router.get("/register", function(req, res) {
   res.render("register");
@@ -59,7 +63,7 @@ router.post("/register", upload.single("image"), function(req, res) {
   } else {
     cloudinary.v2.uploader.upload(
       req.file.path,
-      { width: 200, height: 200, gravity: "center", crop: "scale" },
+      { width: 400, height: 400, gravity: "center", crop: "scale" },
       function(err, result) {
         if (err) {
           req.flash("error", err.messsage);
@@ -92,12 +96,14 @@ router.post("/register", upload.single("image"), function(req, res) {
 router.get("/login", function(req, res) {
   res.render("login");
 });
+
 // handle login logic
 router.post(
   "/login",
   passport.authenticate("local", {
     successRedirect: "/campgrounds",
-    failureRedirect: "/login"
+    failureRedirect: "/login",
+    failureFlash: true
   }),
   function(req, res) {}
 );
@@ -113,7 +119,7 @@ router.get("/users/:user_id", function(req, res) {
   User.findById(req.params.user_id, function(err, foundUser) {
     if (err || !foundUser) {
       req.flash("error", "This user doesn't exist");
-      return res.redirect("/campgrounds");
+      return res.render("error");
     }
     Campground.find()
       .where("author.id")
@@ -121,7 +127,7 @@ router.get("/users/:user_id", function(req, res) {
       .exec(function(err, campgrounds) {
         if (err) {
           req.flash("error", "Something went wrong");
-          res.redirect("/");
+          res.render("error");
         }
         res.render("users/show", { user: foundUser, campgrounds: campgrounds });
       });
@@ -152,8 +158,8 @@ router.put(
           try {
             await cloudinary.v2.uploader.destroy(user.imageId);
             var result = await cloudinary.v2.uploader.upload(req.file.path, {
-              width: 200,
-              height: 200,
+              width: 400,
+              height: 400,
               gravity: "center",
               crop: "scale"
             });
@@ -187,13 +193,11 @@ router.delete("/users/:user_id", middleware.checkProfileOwnership, function(
     }
     if (user.image === "") {
       user.remove();
-      req.flash("success", "Successfully deleted your account");
       res.redirect("/");
     } else {
       try {
         await cloudinary.v2.uploader.destroy(user.imageId);
         user.remove();
-        req.flash("success", "Successfully deleted your account");
         res.redirect("/");
       } catch (err) {
         if (err) {

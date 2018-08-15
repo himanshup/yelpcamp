@@ -1,17 +1,17 @@
 <% include ../partials/header %>
 
-  <div class="container mt-5">
+  <div class="container mt-4">
     <div class="row">
       <div class="col"></div>
-      <div class="col-sm-7 col-md-6 col-lg-5 mt-5">
+      <div class="col-sm-7 col-md-6 col-lg-5">
         <div class="card shadow border-0 p-4">
           <h1 class="text-center display-4">Edit Profile</h1>
           <div>
-            <small class="text-muted">Fields marked * are optional.</small>
+            <small class="text-muted">Fields marked * are required.</small>
           </div>
           <form class="needs-validation" action="/users/<%= user._id %>?_method=PUT" enctype="multipart/form-data" method="POST" novalidate>
             <div class="form-group">
-              <label for="">Name</label>
+              <label for="">Name*</label>
               <input type="text" name="fullName" class="form-control" id="fullName" value="<%= user.fullName %>" required>
               <div class="invalid-feedback">
                 You must enter a name.
@@ -20,22 +20,22 @@
             <div class="form-group">
               <div class="custom-file">
                 <input type="file" name="image" accept="image/*" class="custom-file-input" id="image" aria-describedby="inputGroupFileAddon01">
-                <label class="custom-file-label" for="inputGroupFile01">Avatar*</label>
+                <label class="custom-file-label" for="inputGroupFile01">Avatar</label>
               </div>
             </div>
             <div class="form-group">
-              <label for="">Email</label>
+              <label for="">Email*</label>
               <input type="text" name="email" class="form-control" id="email" value="<%= user.email %>" required>
               <div class="invalid-feedback">
                 You must have an email.
               </div>
             </div>
             <div class="form-group">
-              <label for="">Phone*</label>
+              <label for="">Phone</label>
               <input type="text" name="phone" class="form-control" id="phone" value="<%= user.phone %>"> 
             </div>
             <div class="form-group">
-              <label for="">Username</label>
+              <label for="">Username*</label>
               <input type="text" name="username" class="form-control" id="exampleInputUsername" value="<%= user.username %>" disabled>
             </div>
             <button type="submit" class="btn btn-danger btn-block">Submit</button>

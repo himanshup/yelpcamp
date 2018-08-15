@@ -1,20 +1,40 @@
 <% include ../partials/header %>
+<% include ../partials/errorMsg %>
 
   <div class="container mt-4">    
     <div class="row">
       <div class="col-12 col-md-6 col-lg-3">
-        <div id="profilePicture" class="card shadow-sm">
+        <div id="profilePicture" class="card shadow-sm d-none d-md-block">
           <% if(user.image.length < 1) { %>
             <img class="card-img-top" src="https://basinred.com/wp-content/uploads/2016/09/default-user-img.jpg">
           <% } else { %>
             <img class="card-img-top" src="<%= user.image %>">
-          <% } %>
-          
+          <% } %>          
           <div class="card-body">
             <h5 class="card-title"><%= user.fullName %></h5>
             <h6 class="card-subtitle mb-2 text-muted">@<%= user.username %></h6>  
           </div>
         </div>
+        <div class="d-block d-sm-none d-none d-sm-block d-md-none mx-auto">
+          <div class="row">
+            <div class="col-4 text-center">
+              <% if(user.image.length < 1) { %>
+                <img class="rounded shadow-sm" src="https://basinred.com/wp-content/uploads/2016/09/default-user-img.jpg" style="width: 100px; height: 100px;">
+              <% } else { %>
+                <img class="rounded shadow-sm" src="<%= user.image %>" style="width: 100px; height: 100px;">
+              <% } %>
+            </div>
+            <div class="col-8">
+              <div id="profilePicture" class="card shadow-sm" >                  
+                <div class="card-body">
+                  <h5 class="card-title"><%= user.fullName %></h5>
+                  <h6 class="card-subtitle mb-2 text-muted">@<%= user.username %></h6>  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+       
         <div class="card shadow-sm mt-3 mb-3">
           <div class="card-header">
             About <%= user.fullName %>
@@ -23,9 +43,14 @@
               <li class="list-group-item">
                 <i class="fas fa-envelope"></i> <strong>Email: </strong><a href="mailto:<%= user.email %> "><%= user.email %></a>             
               </li>
-              <li class="list-group-item">
-                <i class="fas fa-phone"></i> <strong>Phone: </strong><span class="text-muted"><%= user.phone %>    </span>          
-              </li>
+              <% if(!user.phone) { %>
+
+              <% } else { %>
+                <li class="list-group-item">
+                  <i class="fas fa-phone"></i> <strong>Phone: </strong><span class="text-muted"><%= user.phone %>    </span>          
+                </li>
+              <% } %>
+              
               <li class="list-group-item">
                 <i class="far fa-calendar-alt"></i> <strong>Joined: </strong><span class="text-muted"><%= moment(user.joined).format('LL') %> </span>             
               </li>              
@@ -41,7 +66,7 @@
         </div>
       </div>
       <div class="col-12 col-md-6 col-lg-9">
-        <% if (currentUser && user._id.equals(currentUser._id)) { %>
+        <div class="container"><% if (currentUser && user._id.equals(currentUser._id)) { %>
           <h2 class="text-center">Your Campgrounds</h2>
           <% if(campgrounds.length === 0) { %>
             <p class="lead mt-4 text-center text-muted">
@@ -52,7 +77,8 @@
           <h2 class="text-center"><%= user.fullName %> doesn't have any Campgrounds</h2>
         <% } else { %>
           <h2 class="text-center"><%= user.fullName %>'s Campgrounds</h2>
-        <% } %>        
+        <% } %> 
+        </div>               
         <div class="row">          
           <% campgrounds.forEach(function(campground) { %>
             <div class="col-12 col-lg-6">
@@ -93,7 +119,7 @@
             </div>
           <% }) %>
         </div>        
-      </p>
+      </div>
     </div>
   </div>
 

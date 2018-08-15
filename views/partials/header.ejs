@@ -30,7 +30,7 @@
                 <li id="home" class="nav-item">
                   <a class="nav-link" href="/campgrounds">Home</a>
                 </li>
-                <li id="home" class="nav-item">
+                <li id="about" class="nav-item">
                   <a class="nav-link" href="/about">About</a>
                 </li>
                 <li id="newCampground" class="nav-item">
@@ -55,29 +55,12 @@
                     <li class="nav-item">
                       <a class="nav-link " href="/logout">Log Out</a>
                     </li>
-                  <% } %>
+                    <% } %>
               </ul>
             </div>
     </div>
   </nav>
-  <div id="alertContainer" class="container bg-transparent">
-    <% if(error && error.length > 0) { %>
-      <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
-        <%= error %>
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-      </div>
-      <% } %>
-        <% if(success && success.length > 0) { %>
-          <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
-            <%= success %>
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-          </div>
-          <% } %>
-  </div>
+
   <script>
     if (window.location.pathname === "/campgrounds") {
       document.title = "YelpCamp";
@@ -91,5 +74,8 @@
     } else if (window.location.pathname == "/campgrounds/new") {
       document.title = "Add Campground"
       document.getElementById("newCampground").classList.toggle("active");
+    } else if (window.location.pathname == "/about") {
+      document.title = "About"
+      document.getElementById("about").classList.toggle("active");
     }
   </script>
