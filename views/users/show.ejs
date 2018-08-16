@@ -40,8 +40,14 @@
                       <%= campgrounds.length %> Campground
                     <% } else { %>
                       <%= campgrounds.length %> Campgrounds
-                    <% } %> 
-                    <div><%= reviews.length %> Reviews</div>
+                    <% } %>
+                    <div>
+                      <% if (reviews.length === 1) { %>
+                        <%= reviews.length %> Review
+                      <% } else { %>
+                        <%= reviews.length %> Reviews
+                      <% } %> 
+                    </div>
                   </h6> 
                 </div>
               </div>
