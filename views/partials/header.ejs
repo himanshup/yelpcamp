@@ -17,67 +17,48 @@
   <nav id="mainNavbar" class="navbar navbar-expand-lg navbar-dark bg-danger">
     <div class="container">
       <% if (!currentUser) { %>
-        <a class="navbar-brand" href="/">YelpCamp</a>
-        <% } else { %>
-          <a class="navbar-brand" href="/campgrounds">YelpCamp</a>
+      <a class="navbar-brand" href="/">YelpCamp</a>
+      <% } else { %>
+        <a class="navbar-brand" href="/campgrounds">YelpCamp</a>
+      <% } %>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li id="home" class="nav-item">
+            <a class="nav-link" href="/campgrounds">Campgrounds</a>
+          </li>
+          <li id="about" class="nav-item">
+            <a class="nav-link" href="/about">About</a>
+          </li>
+          <li id="newCampground" class="nav-item">
+            <a class="nav-link" href="/campgrounds/new">New</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+          <% if(!currentUser) { %>
+            <li id="login" class="nav-item">
+              <a class="nav-link" href="/login">Login</a>
+            </li>
+            <li id="register" class="nav-item">
+              <a class="nav-link" href="/register">Sign Up</a>
+            </li>
+          <% } else { %>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+                <i class="fas fa-user"></i>
+                <%= currentUser.username %>
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="/users/<%= currentUser._id %>">Profile</a>
+                <a class="dropdown-item" href="/logout">Log Out</a>
+              </div>
+            </li>
           <% } %>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-              aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav mr-auto">
-                <li id="home" class="nav-item">
-                  <a class="nav-link" href="/campgrounds">Campgrounds</a>
-                </li>
-                <li id="about" class="nav-item">
-                  <a class="nav-link" href="/about">About</a>
-                </li>
-                <li id="newCampground" class="nav-item">
-                  <a class="nav-link" href="/campgrounds/new">New</a>
-                </li>
-              </ul>
-              <ul class="navbar-nav ml-auto">
-                <% if(!currentUser) { %>
-                  <li id="login" class="nav-item">
-                    <a class="nav-link" href="/login">Login</a>
-                  </li>
-                  <li id="register" class="nav-item">
-                    <a class="nav-link" href="/register">Sign Up</a>
-                  </li>
-                  <% } else { %>
-                    <li class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false">
-                        <i class="fas fa-user"></i>
-                        <%= currentUser.username %>
-                      </a>
-                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="/users/<%= currentUser._id %>">Profile</a>
-                        <a class="dropdown-item" href="/logout">Log Out</a>
-                      </div>
-                    </li>
-                    <% } %>
-              </ul>
-            </div>
+        </ul>
+      </div>
     </div>
   </nav>
-
-  <script>
-    if (window.location.pathname === "/campgrounds") {
-      document.title = "YelpCamp";
-      document.getElementById("home").classList.toggle("active");
-    } else if (window.location.pathname === "/login") {
-      document.title = "Login";
-      document.getElementById("login").classList.toggle("active");
-    } else if (window.location.pathname === "/register") {
-      document.title = "Sign Up";
-      document.getElementById("register").classList.toggle("active");
-    } else if (window.location.pathname == "/campgrounds/new") {
-      document.title = "Add Campground"
-      document.getElementById("newCampground").classList.toggle("active");
-    } else if (window.location.pathname == "/about") {
-      document.title = "About"
-      document.getElementById("about").classList.toggle("active");
-    }
-  </script>
