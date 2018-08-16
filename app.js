@@ -21,11 +21,6 @@ mongoose.connect(
   { useNewUrlParser: true }
 );
 
-// mongoose.connect(
-//   "mongodb://himanshu:beepboop123@ds123532.mlab.com:23532/yelpcamp",
-//   { useNewUrlParser: true }
-// );
-
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
