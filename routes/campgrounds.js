@@ -23,7 +23,10 @@ var imageFilter = function(req, file, cb) {
   }
   cb(null, true);
 };
-var upload = multer({ storage: storage, fileFilter: imageFilter });
+var upload = multer({
+  storage: storage,
+  fileFilter: imageFilter
+});
 
 var cloudinary = require("cloudinary");
 cloudinary.config({
@@ -37,7 +40,9 @@ router.get("/", function(req, res) {
   var noMatch = null;
   if (req.query.search) {
     const regex = new RegExp(escapeRegex(req.query.search), "gi");
-    Campground.find({ name: regex }, function(err, allCampgrounds) {
+    Campground.find({
+      name: regex
+    }, function(err, allCampgrounds) {
       if (err) {
         console.log(err);
       } else {
@@ -53,7 +58,10 @@ router.get("/", function(req, res) {
   } else if (req.query.sortby) {
     if (req.query.sortby === "rateAvg") {
       Campground.find({})
-        .sort({ rateCount: -1, rateAvg: -1 })
+        .sort({
+          rateCount: -1,
+          rateAvg: -1
+        })
         .exec(function(err, allCampgrounds) {
           if (err) {
             console.log(err);
@@ -67,7 +75,9 @@ router.get("/", function(req, res) {
         });
     } else if (req.query.sortby === "rateCount") {
       Campground.find({})
-        .sort({ rateCount: -1 })
+        .sort({
+          rateCount: -1
+        })
         .exec(function(err, allCampgrounds) {
           if (err) {
             console.log(err);
@@ -81,7 +91,10 @@ router.get("/", function(req, res) {
         });
     } else if (req.query.sortby === "priceLow") {
       Campground.find({})
-        .sort({ price: 1, rateAvg: -1 })
+        .sort({
+          price: 1,
+          rateAvg: -1
+        })
         .exec(function(err, allCampgrounds) {
           if (err) {
             console.log(err);
@@ -95,7 +108,10 @@ router.get("/", function(req, res) {
         });
     } else {
       Campground.find({})
-        .sort({ price: -1, rateAvg: -1 })
+        .sort({
+          price: -1,
+          rateAvg: -1
+        })
         .exec(function(err, allCampgrounds) {
           if (err) {
             console.log(err);
@@ -129,8 +145,11 @@ router.post("/", middleware.isLoggedIn, upload.single("image"), function(
   res
 ) {
   cloudinary.v2.uploader.upload(
-    req.file.path,
-    { width: 1500, height: 1000, crop: "scale" },
+    req.file.path, {
+      width: 1500,
+      height: 1000,
+      crop: "scale"
+    },
     function(err, result) {
       if (err) {
         req.flash("error", err.message);
@@ -164,6 +183,9 @@ router.post("/", middleware.isLoggedIn, upload.single("image"), function(
           res.redirect("/campgrounds");
         });
       });
+    }, {
+      moderation:
+      "webpurify"
     }
   );
 });
@@ -198,7 +220,9 @@ router.get("/:id", function(req, res) {
         foundCampground.rateCount = foundCampground.comments.length;
       }
       foundCampground.save();
-      res.render("campgrounds/show", { campground: foundCampground });
+      res.render("campgrounds/show", {
+        campground: foundCampground
+      });
     });
 });
 
@@ -208,7 +232,9 @@ router.get(
   middleware.isLoggedIn,
   middleware.checkCampgroundOwnership,
   function(req, res) {
-    res.render("campgrounds/edit", { campground: req.campground });
+    res.render("campgrounds/edit", {
+      campground: req.campground
+    });
   }
 );
 
@@ -246,6 +272,8 @@ router.put(
                 width: 1500,
                 height: 1000,
                 crop: "scale"
+              }, {
+                moderation: "webpurify"
               });
               campground.imageId = result.public_id;
               campground.image = result.secure_url;

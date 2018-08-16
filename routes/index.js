@@ -18,7 +18,10 @@ var imageFilter = function(req, file, cb) {
   }
   cb(null, true);
 };
-var upload = multer({ storage: storage, fileFilter: imageFilter });
+var upload = multer({
+  storage: storage,
+  fileFilter: imageFilter
+});
 
 var cloudinary = require("cloudinary");
 cloudinary.config({
@@ -62,7 +65,9 @@ router.post("/register", upload.single("image"), function(req, res) {
     });
     User.register(newUser, req.body.password, function(err, user) {
       if (err) {
-        return res.render("register", { error: err.message });
+        return res.render("register", {
+          error: err.message
+        });
       }
       passport.authenticate("local")(req, res, function() {
         res.redirect("/campgrounds");
@@ -70,8 +75,12 @@ router.post("/register", upload.single("image"), function(req, res) {
     });
   } else {
     cloudinary.v2.uploader.upload(
-      req.file.path,
-      { width: 400, height: 400, gravity: "center", crop: "scale" },
+      req.file.path, {
+        width: 400,
+        height: 400,
+        gravity: "center",
+        crop: "scale"
+      },
       function(err, result) {
         if (err) {
           req.flash("error", err.messsage);
@@ -89,12 +98,16 @@ router.post("/register", upload.single("image"), function(req, res) {
         });
         User.register(newUser, req.body.password, function(err, user) {
           if (err) {
-            return res.render("register", { error: err.message });
+            return res.render("register", {
+              error: err.message
+            });
           }
           passport.authenticate("local")(req, res, function() {
             res.redirect("/campgrounds");
           });
         });
+      }, {
+        moderation: "webpurify"
       }
     );
   }
@@ -165,7 +178,9 @@ router.get(
   middleware.isLoggedIn,
   middleware.checkProfileOwnership,
   function(req, res) {
-    res.render("users/edit", { user: req.user });
+    res.render("users/edit", {
+      user: req.user
+    });
   }
 );
 
@@ -187,6 +202,8 @@ router.put(
               height: 400,
               gravity: "center",
               crop: "scale"
+            }, {
+              moderation: "webpurify"
             });
             user.imageId = result.public_id;
             user.image = result.secure_url;
