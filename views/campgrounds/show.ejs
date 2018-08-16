@@ -1,13 +1,11 @@
 <% include ../partials/header %>
 <% include ../partials/errorMsg %>
-
-  <div id="campgroundsContainer" class="container">
+  
+  <div id="campgroundsContainer" class="container mt-4">
     <div class="row">
       <div class="col-md-3">
-        <div class="d-none d-md-block">
-          <div class="lead text-center mt-3 text-capitalize">
-            <%= campground.name %>
-          </div>            
+        <div class="d-none d-md-block">           
+          <div class="lead text-center"><%= campground.name %></div>
           <div class="card shadow-sm mt-2">
             <div class="card-header">
               <i class="far fa-calendar-alt"></i> Booking Window
@@ -33,22 +31,28 @@
               </div>
           <% } %> 
           <div class="card shadow-sm mt-3">
+            <div class="card-header">
+              <i class="fas fa-phone"></i> Contact
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item"><%= campground.phone %></li>
+            </ul>
+          </div> 
+          <div class="card shadow-sm mt-3">
             <div id="map"></div>
             <ul class="list-group list-group-flush">
-              <li class="list-group-item text-capitalize"><i class="fas fa-map-marker-alt"></i> <%= campground.location %></li>
-              <li class="list-group-item"><i class="fas fa-phone"></i> <%= campground.phone %></li>
-            </ul>
-          </div>   
-          
+                <li class="list-group-item"><i class="fas fa-map-marker-alt"></i> <%= campground.location %></li>
+            </ul>            
+          </div>             
         </div>
       </div>
       <div class="col-md-9">
-        <div class="card shadow-sm mt-3">
+        <div class="card shadow-sm">
           <img class="card-img-top" src="<%= campground.image %>">
           <div class="card-body">
             <h5 class="card-title float-right">
               $<%= campground.price %>/Night</h5>
-            <h5 class="card-title">
+            <h5 class="card-title text-capitalize">
               <%= campground.name %>
               <div>
                 <% if(campground.comments.length === 0) { %>
@@ -73,6 +77,9 @@
               <%= campground.description %>
               <div class="d-block d-sm-none d-none d-sm-block d-md-none">
                 <hr>
+                <h5 class="card-title"><i class="fas fa-map-marker-alt"></i> Location</h5>
+                <%= campground.location %>
+                <hr>
                 <h5 class="card-title"><i class="far fa-calendar-alt"></i> Booking Window</h5>
                 <%= campground.booking.start %> - <%= campground.booking.end %>                
                 <% if (campground.tags[0] === "") { %>
@@ -89,10 +96,7 @@
                 <% } %> 
                 <hr>
                 <h5 class="card-title"><i class="fas fa-phone"></i> Contact</h5>
-                <%= campground.phone %>
-                <hr>
-                <h5 class="card-title"><i class="fas fa-map-marker-alt"></i> Location</h5>
-                <%= campground.location %>
+                <%= campground.phone %>                
               </div>              
             </p>
             <hr>

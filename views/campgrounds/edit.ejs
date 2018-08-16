@@ -1,80 +1,77 @@
 <% include ../partials/header %>
 
-  <div class="container mt-4">    
+  <div class="container mt-4">
     <div class="row">
-      <div class="col">
-
-      </div>
+      <div class="col"></div>
       <div class="col-12 col-sm-12 col-lg-9">
-        <div class="card shadow border-0 p-4">
-          <h1 class="text-center">Edit
-              <%= campground.name %>
-          </h1>
-          <div>
+        <div class="card shadow border-0">
+          <div class="card-body">
+            <h1 class="text-center">Edit
+                <%= campground.name %>
+            </h1>
+            <p>
               <small class="text-muted">Fields marked * are required.</small>
-          </div>
-          <form action="/campgrounds/<%= campground._id %>?_method=PUT" method="POST" class="needs-validation" enctype="multipart/form-data"
-            novalidate>            
-            <div class="form-group">
-              <label>Name*</label>
-              <input type="text" class="form-control" name="campground[name]" value="<%= campground.name %>">
-            </div>
-            <div class="form-group">
-              <label for="">Price/Night*</label>
-              <input type="number" class="form-control" name="campground[price]" value="<%= campground.price %>" min="0.01" step="0.01">
-            </div>
-            <div class="input-group mb-3">
-              <div class="custom-file">
-                <input type="file" name="image" accept="image/*" class="custom-file-input" id="image" aria-describedby="inputGroupFileAddon01">
-                <label class="custom-file-label" for="inputGroupFile01">Image*</label>
+            </p>
+            <form action="/campgrounds/<%= campground._id %>?_method=PUT" method="POST" class="needs-validation" enctype="multipart/form-data"
+              novalidate>
+              <div class="form-group">
+                <label>Name*</label>
+                <input type="text" class="form-control" name="campground[name]" value="<%= campground.name %>">
               </div>
-            </div>
-            <div class="form-group">
-              <label for="exampleFormControlTextarea1">Description*</label>
-              <textarea class="form-control" id="exampleFormControlTextarea1" name="campground[description]" rows="3" required><%= campground.description %></textarea>
-            </div>
-            <div class="form-group">
-              <label for="location">Location*</label>
-              <input type="text" class="form-control" name="campground[location]" value="<%= campground.location %>" id="location" required>
-              <div class="invalid-feedback">
-                Please provide a valid location
+              <div class="form-group">
+                <label for="">Price/Night*</label>
+                <input type="number" class="form-control" name="campground[price]" value="<%= campground.price %>" min="0.01" step="0.01">
               </div>
-            </div>
-            <div class="form-group">
-              <label for="">Phone Number*</label>
-              <input type="text" class="form-control" name="campground[phone]" value="<%= campground.phone %>" required>
-              <div class="invalid-feedback">
-                Please provide a phone number.
-              </div>
-            </div>            
-            <div class="form-row">
-              <div class="form-group col-md-6">
-                <label for="">Booking Window (Start)*</label>
-                <input type="text" class="form-control" name="campground[start]" value="<%= campground.booking.start %>" required>
-                <div class="invalid-feedback">
-                  Please provide a booking window.
+              <div class="input-group mb-3">
+                <div class="custom-file">
+                  <input type="file" name="image" accept="image/*" class="custom-file-input" id="image" aria-describedby="inputGroupFileAddon01">
+                  <label class="custom-file-label" for="inputGroupFile01">Image*</label>
                 </div>
               </div>
-              <div class="form-group col-md-6">
-                <label for="">Booking Window (End)*</label>
-                <input type="text" class="form-control" name="campground[end]" value="<%= campground.booking.end %>" required>
+              <div class="form-group">
+                <label for="exampleFormControlTextarea1">Description*</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" name="campground[description]" rows="3" required><%= campground.description %></textarea>
               </div>
-            </div>
-            <div class="form-group">
-              <label for="">Amenities separated by commas (boating,fishing,wifi)</label>
-              <input type="text" class="form-control" name="campground[tags]" value="<%= campground.tags %>">
-            </div>
-            <button type="submit" class="btn btn-danger btn-block">Submit</button>
-          </form>
-          <a class="btn btn-link btn-block" href="/campgrounds/<%= campground._id %>">Go Back</a>
+              <div class="form-group">
+                <label for="location">Location*</label>
+                <input type="text" class="form-control" name="campground[location]" value="<%= campground.location %>" id="location" required>
+                <div class="invalid-feedback">
+                  Please provide a valid location
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="">Phone Number*</label>
+                <input type="text" class="form-control" name="campground[phone]" value="<%= campground.phone %>" required>
+                <div class="invalid-feedback">
+                  Please provide a phone number.
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="">Booking Window (Start)*</label>
+                  <input type="text" class="form-control" name="campground[start]" value="<%= campground.booking.start %>" required>
+                  <div class="invalid-feedback">
+                    Please provide a booking window.
+                  </div>
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="">Booking Window (End)*</label>
+                  <input type="text" class="form-control" name="campground[end]" value="<%= campground.booking.end %>" required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="">Amenities separated by commas (boating,fishing,wifi)</label>
+                <input type="text" class="form-control" name="campground[tags]" value="<%= campground.tags %>">
+              </div>
+              <button type="submit" class="btn btn-danger btn-block">Submit</button>
+            </form>
+            <a class="btn btn-link btn-block" href="/campgrounds/<%= campground._id %>">Go Back</a>
+          </div>
+
         </div>
-
       </div>
-      <div class="col">
-
-      </div>
+      <div class="col"></div>
     </div>
-
   </div>
 
   <% include ../partials/footer %>

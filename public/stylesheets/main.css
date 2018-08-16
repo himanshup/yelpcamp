@@ -22,11 +22,6 @@ a {
   width: 100%;
 }
 
-#map2 {
-  height: 400px;
-  width: 100%;
-}
-
 .delBtn {
   background: transparent;
 }
@@ -37,7 +32,11 @@ a {
   width: 100%;
   /* height: 60px; */
   line-height: 60px;
-  background: transparent
+  background: transparent;
+}
+
+.navbar-brand {
+  font-size: 26px;
 }
 
 .jumbotron {
@@ -46,10 +45,11 @@ a {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  min-height: 500px;
+  min-height: 400px;
+  margin-bottom: 0px;
 }
 
-.jumbotronTitle {
+.jumbotronText {
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
 }
 

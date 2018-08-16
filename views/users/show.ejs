@@ -1,6 +1,6 @@
 <% include ../partials/header %>
-<% include ../partials/errorMsg %>
 
+  <% include ../partials/errorMsg %>
   <div class="container mt-4">    
     <div class="row">
       <div class="col-12 col-md-6 col-lg-3">
@@ -8,12 +8,19 @@
           <% if(user.image.length < 1) { %>
             <img class="card-img-top" src="https://basinred.com/wp-content/uploads/2016/09/default-user-img.jpg">
           <% } else { %>
-            <img class="card-img-top" src="<%= user.image %>">
-          <% } %>          
-          <div class="card-body">
-            <h5 class="card-title"><%= user.fullName %></h5>
-            <h6 class="card-subtitle mb-2 text-muted">@<%= user.username %></h6>  
-          </div>
+            <img class="card-img-top rounded" src="<%= user.image %>">
+          <% } %>  
+            <div class="card-body">
+                <h5 class="card-title text-capitalize"><%= user.fullName %></h5>
+                <h6 class="card-subtitle mb-2 text-muted">                
+                  <% if (campgrounds.length === 1) { %>
+                    <%= campgrounds.length %> Campground
+                  <% } else { %>
+                    <%= campgrounds.length %> Campgrounds
+                  <% } %> 
+                  <div><%= reviews.length %> Reviews</div>
+                </h6> 
+            </div>        
         </div>
         <div class="d-block d-sm-none d-none d-sm-block d-md-none mx-auto">
           <div class="row">
@@ -28,7 +35,14 @@
               <div id="profilePicture" class="card shadow-sm" >                  
                 <div class="card-body">
                   <h5 class="card-title"><%= user.fullName %></h5>
-                  <h6 class="card-subtitle mb-2 text-muted">@<%= user.username %></h6>  
+                  <h6 class="card-subtitle mb-2 text-muted">                    
+                    <% if (campgrounds.length === 1) { %>
+                      <%= campgrounds.length %> Campground
+                    <% } else { %>
+                      <%= campgrounds.length %> Campgrounds
+                    <% } %> 
+                    <div><%= reviews.length %> Reviews</div>
+                  </h6> 
                 </div>
               </div>
             </div>
@@ -36,21 +50,23 @@
         </div>
        
         <div class="card shadow-sm mt-3 mb-3">
-          <div class="card-header">
-            About <%= user.fullName %>
+          <div class="card-header text-capitalize">
+            <% if (currentUser && user._id.equals(currentUser._id)) { %>
+              Your Profile
+            <% } else { %>
+              <%= user.fullName %>'s Profile
+            <% } %>            
           </div>
           <ul class="list-group list-group-flush">
               <li class="list-group-item">
                 <i class="fas fa-envelope"></i> <strong>Email: </strong><a href="mailto:<%= user.email %> "><%= user.email %></a>             
               </li>
               <% if(!user.phone) { %>
-
               <% } else { %>
                 <li class="list-group-item">
                   <i class="fas fa-phone"></i> <strong>Phone: </strong><span class="text-muted"><%= user.phone %>    </span>          
                 </li>
-              <% } %>
-              
+              <% } %>              
               <li class="list-group-item">
                 <i class="far fa-calendar-alt"></i> <strong>Joined: </strong><span class="text-muted"><%= moment(user.joined).format('LL') %> </span>             
               </li>              
@@ -66,19 +82,7 @@
         </div>
       </div>
       <div class="col-12 col-md-6 col-lg-9">
-        <div class="container"><% if (currentUser && user._id.equals(currentUser._id)) { %>
-          <h2 class="text-center">Your Campgrounds</h2>
-          <% if(campgrounds.length === 0) { %>
-            <p class="lead mt-4 text-center text-muted">
-              You don't have any campgrounds, click <a href="/campgrounds/new">here</a> to create one!
-            </p>
-          <% } %>
-        <% } else if (campgrounds.length === 0) { %>
-          <h2 class="text-center"><%= user.fullName %> doesn't have any Campgrounds</h2>
-        <% } else { %>
-          <h2 class="text-center"><%= user.fullName %>'s Campgrounds</h2>
-        <% } %> 
-        </div>               
+        <div class="container text-center"><h1>Campgrounds</h1></div>             
         <div class="row">          
           <% campgrounds.forEach(function(campground) { %>
             <div class="col-12 col-lg-6">

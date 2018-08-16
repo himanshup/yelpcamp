@@ -29,7 +29,11 @@ cloudinary.config({
 
 // root route
 router.get("/", function(req, res) {
-  res.render("landing");
+  if (req.user) {
+    return res.redirect("/campgrounds");
+  } else {
+    res.render("landing");
+  }
 });
 
 router.get("/about", function(req, res) {
@@ -38,7 +42,11 @@ router.get("/about", function(req, res) {
 
 // show register form
 router.get("/register", function(req, res) {
-  res.render("register");
+  if (req.user) {
+    return res.redirect("/campgrounds");
+  } else {
+    res.render("register");
+  }
 });
 
 // handle sign up logic
@@ -94,7 +102,11 @@ router.post("/register", upload.single("image"), function(req, res) {
 
 // show login form
 router.get("/login", function(req, res) {
-  res.render("login");
+  if (req.user) {
+    return res.redirect("/campgrounds");
+  } else {
+    res.render("login");
+  }
 });
 
 // handle login logic
@@ -129,7 +141,20 @@ router.get("/users/:user_id", function(req, res) {
           req.flash("error", "Something went wrong");
           res.render("error");
         }
-        res.render("users/show", { user: foundUser, campgrounds: campgrounds });
+        Comment.find()
+          .where("author.id")
+          .equals(foundUser._id)
+          .exec(function(err, ratedCount) {
+            if (err) {
+              req.flash("error", "Something went wrong");
+              res.render("error");
+            }
+            res.render("users/show", {
+              user: foundUser,
+              campgrounds: campgrounds,
+              reviews: ratedCount
+            });
+          });
       });
   });
 });

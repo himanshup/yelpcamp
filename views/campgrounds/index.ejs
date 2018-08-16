@@ -1,85 +1,76 @@
 <% include ../partials/header %>
 
-  <div class="d-none d-md-block">
-    <header class="jumbotron text-center text-light d-flex justify-content-center rounded-0">
-      <div class="jumbotron-text mt-5">
+  <header class="jumbotron text-light rounded-0 d-none d-md-block">
+    <div class="container ">
+      <div class="jumbotron-text mt-5 text-center">
         <% if(noMatch !== null) { %>
-          <h3 class="jumbotext">Couldn't find results for <%= noMatch %>, try again. </h3>
-          <form action="/campgrounds" method="GET" class="input-group shadow-lg mt-3">        
-            <input type="text" class="form-control border-0" type="text" name="search" placeholder="Search Campgrounds..." aria-label="Search">
-            <div class="input-group-append">
-              <button class="btn btn-danger" type="submit">
-                <i class="fa fa-search"></i>
-              </button>
-            </div>        
-          </form>
-        <% } else { %>
-          <h1 class="display-4 jumbotronTitle">Welcome To YelpCamp!</h1>
-          <p class="lead">View our hand-picked campgrounds from all over the world</p>
-          <form action="/campgrounds" method="GET" class="input-group shadow-lg mt-3">        
-            <input type="text" class="form-control border-0" type="text" name="search" placeholder="Search Campgrounds..." aria-label="Search">
-            <div class="input-group-append">
-              <button class="btn btn-danger" type="submit">
-                <i class="fa fa-search"></i>
-              </button>
-            </div>        
-          </form>
+        <h2 class="jumbotronText">Couldn't find results for <span class="font-italic"><%= noMatch %></span>, try again. </h2>
+        <% } else { %>          
+        <h1 class="display-3 jumbotronText">Welcome to YelpCamp!</h1>    
+        <div class="lead jumbotronText">View campgrounds from all over the world</div>   
         <% } %>      
       </div>
-    </header>
-  </div>
-  <div class="d-block d-sm-none d-none d-sm-block d-md-none text-center">
-    <% if(noMatch !== null) { %>
-      <div class="container">
-        <p class="lead mt-3">Couldn't find results for <span class="text-danger"><%= noMatch %></span>, try again.</p>
-        <form action="/campgrounds" method="GET" class="input-group shadow-sm">        
-          <input type="text" class="form-control border-0" type="text" name="search" placeholder="Search Campgrounds..." aria-label="Search">
-          <div class="input-group-append">
-            <button class="btn btn-danger" type="submit">
-              <i class="fa fa-search"></i>
-            </button>
-          </div>        
-        </form>
-      </div>        
-    <% } else { %>      
+    </div>
+  </header>
+  <nav id="searchNav" class="navbar navbar-expand navbar-light bg-white shadow-sm">
     <div class="container">
+        <div class="collapse navbar-collapse">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Sort By
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <form class="sortForm" action="/campgrounds" method="GET">
+                  <input type="text" name="sortby" value="rateAvg" class="d-none">
+                  <button type="submit" class="dropdown-item">Highest Rated</button>
+                </form>
+                <form class="sortForm" action="/campgrounds" method="GET">
+                  <input type="text" name="sortby" value="rateCount" class="d-none">
+                  <button type="submit" class="dropdown-item">Most Reviewed</button>
+                </form>
+                <form class="sortForm" action="/campgrounds" method="GET">
+                  <input type="text" name="sortby" value="priceLow" class="d-none">
+                  <button type="submit" class="dropdown-item">Lowest Price</button>
+                </form>
+                <form class="sortForm" action="/campgrounds" method="GET">
+                  <input type="text" name="sortby" value="priceHigh" class="d-none">
+                  <button type="submit" class="dropdown-item">Highest Price</button>
+                </form>                  
+                <a href="/campgrounds" href class="dropdown-item">Reset</a>                 
+              </div>
+            </li>
+          </ul>
+          <div class="d-none d-md-block">
+              <form action="/campgrounds" method="GET" class="input-group">        
+                <input type="text" class="form-control" type="text" name="search" placeholder="Search Campgrounds..." aria-label="Search">
+                <div class="input-group-append">
+                  <button class="btn btn-danger border-0" type="submit">
+                    <i class="fa fa-search"></i>
+                  </button>
+                </div>        
+              </form>
+          </div>
+        </div>
+    </div>          
+  </nav>
+
+  <div id="campgroundHome" class="container ">
+    <div class="d-block d-none d-md-none">
       <form action="/campgrounds" method="GET" class="input-group shadow-sm mt-3">        
         <input type="text" class="form-control border-0" type="text" name="search" placeholder="Search Campgrounds..." aria-label="Search">
         <div class="input-group-append">
-          <button class="btn btn-danger" type="submit">
+          <button class="btn btn-danger border-0" type="submit">
             <i class="fa fa-search"></i>
           </button>
         </div>        
       </form>
-    </div>        
-    <% } %>      
-  </div>
-  <div class="container mt-3">
-    <div class="dropdown">
-      <a class="btn btn-danger btn-sm dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Sort by
-      </a>    
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-        <form class="sortForm" action="/campgrounds" method="GET">
-          <input type="text" name="sortby" value="rateAvg" class="d-none">
-          <button type="submit" class="dropdown-item">Highest Rated</button>
-        </form>
-        <form class="sortForm" action="/campgrounds" method="GET">
-          <input type="text" name="sortby" value="rateCount" class="d-none">
-          <button type="submit" class="dropdown-item">Most Reviewed</button>
-        </form>
-        <form class="sortForm" action="/campgrounds" method="GET">
-          <input type="text" name="sortby" value="priceLow" class="d-none">
-          <button type="submit" class="dropdown-item">Lowest Price</button>
-        </form>
-        <form class="sortForm" action="/campgrounds" method="GET">
-          <input type="text" name="sortby" value="priceHigh" class="d-none">
-          <button type="submit" class="dropdown-item">Highest Price</button>
-        </form>
-      </div>
     </div>
-  </div> 
-  <div id="campgroundHome" class="container">      
+    <div class="jumbotron-text text-center mt-3  d-block d-sm-none d-none d-sm-block d-md-none">
+      <% if(noMatch !== null) { %>
+      <h3>Couldn't find results for <span class="font-italic"><%= noMatch %></span>, try again. </h3>
+      <% } %>  
+    </div>      
     <div class="row">
       <% campgrounds.forEach(function(campground) { %>
         <div class="col-sm-12 col-md-6 col-lg-4">
@@ -100,9 +91,9 @@
                 <% if(campground.comments.length === 0) { %>
                   <span class="text-muted">No Reviews</span>
                 <% } else { %>
-                  <% var stars = ['<i class="far fa-star text-danger"></i>', '<i class="far fa-star text-danger"></i>', '<i class="far fa-star text-danger"></i>', '<i class="far fa-star text-danger"></i>', '<i class="far fa-star text-danger"></i>'] %>
+                  <% var stars = ['<i class="far fa-star text-danger "></i>', '<i class="far fa-star text-danger "></i>', '<i class="far fa-star text-danger "></i>', '<i class="far fa-star text-danger "></i>', '<i class="far fa-star text-danger "></i>'] %>
                   <% for(var i = 0; i < Math.round(campground.rateAvg); i++) { %>
-                      <% stars[i] = '<i class="fas fa-star text-danger"></i>' %>
+                      <% stars[i] = '<i class="fas fa-star text-danger "></i>' %>
                   <% } %> 
                   <% for(var i = 0; i < stars.length; i++) { %>
                     <%- stars[i] %>
