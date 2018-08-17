@@ -35,22 +35,32 @@ cloudinary.config({
   api_secret: process.env.API_SECRET
 });
 
+var Fuse = require("fuse.js");
+
 // INDEX - show all campgrounds
 router.get("/", function(req, res) {
   var noMatch = null;
   if (req.query.search) {
-    const regex = new RegExp(escapeRegex(req.query.search), "gi");
-    Campground.find({
-      name: regex
-    }, function(err, allCampgrounds) {
+    Campground.find({}, function(err, allCampgrounds) {
       if (err) {
         console.log(err);
-      } else {
-        if (allCampgrounds.length < 1) {
+      } else {        
+        var options = {
+          shouldSort: true,
+          threshold: 0.5,
+          location: 0,
+          distance: 100,
+          maxPatternLength: 32,
+          minMatchCharLength: 2,
+          keys: ["name", "location"]
+        };
+        var fuse = new Fuse(allCampgrounds, options);
+        var result = fuse.search(req.query.search);
+        if (result.length < 1) {
           noMatch = req.query.search;
         }
         res.render("campgrounds/index", {
-          campgrounds: allCampgrounds,
+          campgrounds: result,
           noMatch: noMatch
         });
       }
@@ -145,7 +155,8 @@ router.post("/", middleware.isLoggedIn, upload.single("image"), function(
   res
 ) {
   cloudinary.v2.uploader.upload(
-    req.file.path, {
+    req.file.path,
+    {
       width: 1500,
       height: 1000,
       crop: "scale"
@@ -183,9 +194,9 @@ router.post("/", middleware.isLoggedIn, upload.single("image"), function(
           res.redirect("/campgrounds");
         });
       });
-    }, {
-      moderation:
-      "webpurify"
+    },
+    {
+      moderation: "webpurify"
     }
   );
 });
@@ -257,36 +268,41 @@ router.put(
         end: req.body.campground.end
       };
       req.body.campground.tags = req.body.campground.tags.split(",");
-      Campground.findByIdAndUpdate(req.params.id, req.body.campground, async function(
-        err,
-        campground
-      ) {
-        if (err) {
-          req.flash("error", err.message);
-          res.redirect("back");
-        } else {
-          if (req.file) {
-            try {
-              await cloudinary.v2.uploader.destroy(campground.imageId);
-              var result = await cloudinary.v2.uploader.upload(req.file.path, {
-                width: 1500,
-                height: 1000,
-                crop: "scale"
-              }, {
-                moderation: "webpurify"
-              });
-              campground.imageId = result.public_id;
-              campground.image = result.secure_url;
-            } catch (err) {
-              req.flash("error", err.message);
-              return res.render("error");
+      Campground.findByIdAndUpdate(
+        req.params.id,
+        req.body.campground,
+        async function(err, campground) {
+          if (err) {
+            req.flash("error", err.message);
+            res.redirect("back");
+          } else {
+            if (req.file) {
+              try {
+                await cloudinary.v2.uploader.destroy(campground.imageId);
+                var result = await cloudinary.v2.uploader.upload(
+                  req.file.path,
+                  {
+                    width: 1500,
+                    height: 1000,
+                    crop: "scale"
+                  },
+                  {
+                    moderation: "webpurify"
+                  }
+                );
+                campground.imageId = result.public_id;
+                campground.image = result.secure_url;
+              } catch (err) {
+                req.flash("error", err.message);
+                return res.render("error");
+              }
             }
+            campground.save();
+            req.flash("success", "Successfully updated your campground!");
+            res.redirect("/campgrounds/" + req.params.id);
           }
-          campground.save();
-          req.flash("success", "Successfully updated your campground!");
-          res.redirect("/campgrounds/" + req.params.id);
         }
-      });
+      );
     });
   }
 );
@@ -310,9 +326,5 @@ router.delete("/:id", middleware.checkCampgroundOwnership, function(req, res) {
     }
   });
 });
-
-function escapeRegex(text) {
-  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
-}
 
 module.exports = router;
