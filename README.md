@@ -3,6 +3,8 @@ YelpCamp is a website where users can create and review campgrounds. In order to
 
 This website was created using Node.js, Express, MongoDB, and Bootstrap. Passport.js was used to handle authentication.  
 
+View it here https://yelp-camp2018.herokuapp.com/
+
 ## Features
 * Users can create, edit, and remove campgrounds
 * Users can review campgrounds once, and edit or remove their review
