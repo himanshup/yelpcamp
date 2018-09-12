@@ -15,7 +15,7 @@ View it here https://yelp-camp2018.herokuapp.com/
 * Sort campgrounds by highest rating, most reviewed, lowest price, or highest price
 
 ## Installation
-**Note**: You need to install MongoDB and edit where it says DATABASEURL with yours.  
+**Note**: You need to install MongoDB and edit where it says DATABASEURL (in app.js) with yours.  
 ```
 git clone https://github.com/himanshup/yelp-camp.git
 cd yelp-camp
