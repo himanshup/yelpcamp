@@ -24,7 +24,7 @@ cd yelpcamp
 npm install
 ```
 
-Create a .env file (or just export manually in the terminal) and add the following:  
+Create a .env file (or just export manually in the terminal) in the root of the project and add the following:  
 
 ```
 DATABASEURL='<url>'
