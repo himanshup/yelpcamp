@@ -26,7 +26,9 @@
     "node-geocoder": "^3.22.0",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
-    "passport-local-mongoose": "^5.0.1"
+    "passport-local-mongoose": "^5.0.1",
+    "mpath": ">=0.5.1",
+    "lodash": ">=4.17.11"
   },
   "devDependencies": {
     "eslint": "^5.3.0",
